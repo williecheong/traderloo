@@ -1,7 +1,7 @@
 <?php // if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require(APPPATH.'/libraries/REST_Controller.php');
 
-class Api extends REST_Controller {
+class API_Controller extends REST_Controller {
     
     function __construct() {
         parent::__construct();
@@ -14,7 +14,7 @@ class Api extends REST_Controller {
                 "secret" => FB_SECRET
             )
         );
-        
+
         $this->facebook_url = '';    
         $this->facebook_user = $this->facebook->getUser();
         
@@ -22,23 +22,22 @@ class Api extends REST_Controller {
             // Registers the facebook user if not already done.
             // Always returns the local user ID of this person from our database.
             $user = $this->user->try_register( $this->facebook_user );
-            
             $this->session->set_userdata('user_id', $user->id);
-            $this->session->set_userdata('email', $user->email);
-            
             $this->facebook_url = $this->facebook->getLogouturl(
                 array(
-                    "next" => base_url() . 'api/misc/logout'
+                    "next" => base_url() . 'main/logout'
                 )
             );
-        
         } else {
             $this->facebook_url = $this->facebook->getLoginUrl(
                 array(
-                    "scope" => "email,manage_notifications",
                     "display" => "page"
                 )
             );
         }
+    }
+
+    function index_get() {
+        echo $this->session->userdata('user_id');
     }
 }

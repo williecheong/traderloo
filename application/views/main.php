@@ -6,14 +6,14 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>{{ balance }}</title>
+        <title><?=APP_NAME?> - {{ balance }}</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="css/normalize.min.css">
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="/assets/css/normalize.min.css">
+        <link rel="stylesheet" href="/assets/css/main.css">
 
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
@@ -21,7 +21,6 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-
         <div class="container">
             <div>
                 {{ visualizations }}
@@ -38,12 +37,16 @@
                     </div>
                 </div>
             </div>
+            <a class="btn btn-danger btn-sm" href="<?=$this->facebook_url?>">
+                <i class="fa fa-sign-out"></i>
+                Sign out
+            </a>
         </div>
 
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.js"></script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
+        <script src="/assets/js/plugins.js"></script>
+        <script src="/assets/js/main.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <!--

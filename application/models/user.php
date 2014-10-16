@@ -3,24 +3,24 @@
 class user extends CI_Model{
     
     function try_register( $facebook_id = 0 ) {
-        $availability = $this->user->retrieve_by_id($facebook_id);
+        $user = $this->user->retrieve_by_id($facebook_id);
         
-        if ( $availability ) {
+        if ( $user ) {
             // user exists, 
             // update image and name
             // update last_active for last login
             $facebook_profile = $this->facebook->api('/me');
             $this->user->update(
                 array(
-                    'id' => $availability[0]->id
+                    'id' => $user->id
                 ),
                 array(
                     'name' =>$facebook_profile['name'],
-                    'last_login' => date( 'Y-m-d H:i:s' )
+                    'last_login' => time()
                 )
             );
 
-            return $availability[0];
+            return $user;
 
         } else {
             // user does not exist yet.
@@ -30,11 +30,7 @@ class user extends CI_Model{
                 array(
                     'id' => $facebook_id,
                     'name' => $facebook_profile['name'],
-                    'email' => ( isset($facebook_profile['email']) ) ? $facebook_profile['email'] : '',
-                    'cell_number' => '',
-                    'rating' => '',
-                    'notifications' => '',
-                    'last_login' => date( 'Y-m-d H:i:s' )
+                    'last_login' => time()
                 )
             );
 
@@ -42,6 +38,14 @@ class user extends CI_Model{
 
             return $user;
         }
+    }
+
+    function retrieve_active() {
+        return $this->user->retrieve(
+            array(
+                'last_login >' => time() - ACTIVE_THRESHOLD
+            )
+        );
     }
 
     function retrieve_by_id( $id = 0 ) {

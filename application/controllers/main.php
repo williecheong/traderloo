@@ -13,28 +13,23 @@ class Main extends CI_Controller {
                 "secret" => FB_SECRET
             )
         );
-        
+
         $this->facebook_url = '';    
         $this->facebook_user = $this->facebook->getUser();
         
         if ( $this->facebook_user ) {
             // Registers the facebook user if not already done.
             // Always returns the local user ID of this person from our database.
-            // $user = $this->user->try_register( $this->facebook_user );
-            
+            $user = $this->user->try_register( $this->facebook_user );
             $this->session->set_userdata('user_id', $user->id);
-            $this->session->set_userdata('email', $user->email);
-            
             $this->facebook_url = $this->facebook->getLogouturl(
                 array(
-                    "next" => base_url() . 'api/misc/logout'
+                    "next" => base_url() . 'main/logout'
                 )
             );
-        
         } else {
             $this->facebook_url = $this->facebook->getLoginUrl(
                 array(
-                    "scope" => "email,manage_notifications",
                     "display" => "page"
                 )
             );
@@ -44,9 +39,15 @@ class Main extends CI_Controller {
 	public function index( $load_personal = false ) {
         // Is session available when user is requesting the personal page?
         if ( $this->session->userdata('user_id') ) {
-            $this->load->view('main_logged_in');
+            $this->load->view('main');
         } else {
             $this->load->view('main_logged_out');
         }
+    }
+
+    public function logout() {
+        session_destroy();
+        $this->session->sess_destroy();
+        redirect( base_url() );
     }
 }

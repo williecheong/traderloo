@@ -12,12 +12,13 @@ Just name dev stuff traderloo for now
 
 - GET /account
     - Returns statistics about the trading account
+    - Includes a list of unclosed trades
+
+- GET /stocks
+    Returns a list of stocks to trade
 
 - GET /trades
     - Returns a list of all trades
-
-- GET /trades?status=active
-    - Returns a list of unclosed trades
 
 - POST /trades
     - Must be called with trade params

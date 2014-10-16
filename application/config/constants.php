@@ -7,9 +7,12 @@
 |--------------------------------------------------------------------------
 */
 
-define('CURRENT_VERSION',   '0.9001');
+define('APP_NAME',          'Traderloo');
 define('FB_APPID',          '347239935437437');
 define('FB_SECRET',         'd038b5f41d8dd2d101e4aee676e396cf');
+
+// User active if last action was X seconds ago
+define('ACTIVE_THRESHOLD',  60); 
 
 
 /*
