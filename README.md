@@ -8,14 +8,18 @@ Just name dev stuff traderloo for now
 ## Descriptive list of planned end points
 
 - GET /users
-    - Returns a list of active users
+    - Returns a list of active users 
+    - DONE
 
 - GET /account
     - Returns statistics about the trading account
     - Includes a list of unclosed trades
 
 - GET /stocks
-    Returns a list of stocks to trade
+    - Returns a list of stocks to trade
+
+- GET /stocks/{code}
+    - Returns details for the specified stock
 
 - GET /trades
     - Returns a list of all trades
