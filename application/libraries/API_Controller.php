@@ -37,7 +37,11 @@ class API_Controller extends REST_Controller {
         }
     }
 
-    function index_get() {
-        echo $this->session->userdata('user_id');
+    public function message( $str = "" ) {
+        return json_encode(
+            array(
+                "message" => $str
+            )
+        );
     }
 }

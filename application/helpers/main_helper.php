@@ -56,6 +56,13 @@ if ( ! function_exists('encode_to_chinese') ) {
     }
 }
 
+if ( ! function_exists('encode_uri_component') ) {
+    function encode_uri_component($str) {
+        $revert = array('%21'=>'!', '%2A'=>'*', '%27'=>"'", '%28'=>'(', '%29'=>')');
+        return strtr(rawurlencode($str), $revert);
+    }
+}
+    
 if ( ! function_exists('indent') ) {
     /**
     * Indents a flat JSON string to make it more human-readable.

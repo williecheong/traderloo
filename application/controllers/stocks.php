@@ -3,28 +3,42 @@ require(APPPATH.'/libraries/API_Controller.php');
 
 class Stocks extends API_Controller {
     
+    function __construct() {
+        parent::__construct();
+        $this->load->model('stock');
+    }
+
     public function index_get() {
-        $stock_code = $this->get('code');
-        if ($stock_code) {
-            $this->retrieve_single($stock_code);
+        $symbol = $this->get('symbol');
+        if ($symbol) {
+            $this->retrieve_single($symbol);
         } else {
             $this->retrieve_list();    
         }
         return;
     }
 
-    private function retrieve_single( $stock_code = "" ) {
-        http_response_code("200");
-        header('Content-Type: application/json');
-        echo json_encode(array($stock_code));
+    private function retrieve_single( $symbol = "" ) {
+        $symbol = strtoupper($symbol);
+        $stock = $this->stock->retrieve($symbol);
+        if ( $stock ) {
+            http_response_code("200");
+            header('Content-Type: application/json');
+            echo json_encode($stock);
+        } else {
+            http_response_code("404");
+            header('Content-Type: application/json');
+            echo $this->message("Stock not found: " . $symbol);
+        }
         return;
     }
 
     private function retrieve_list() {
+        $stocks = $this->stock->retrieve_all();
         
         http_response_code("200");
         header('Content-Type: application/json');
-        echo json_encode(array(1,2,3));
+        echo json_encode($stocks);
         return;
     }
 }
