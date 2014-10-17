@@ -14,6 +14,7 @@ Just name dev stuff traderloo for now
 - GET /account
     - Returns statistics about the trading account
     - Includes a list of unclosed trades
+    - DONE
 
 - GET /stocks
     - Returns a list of stocks to trade
