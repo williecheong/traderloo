@@ -2,6 +2,26 @@
 
 class account extends CI_Model{
     
+    function debit( $amount = 0, $reason = "", $reason_detail = "" ) {
+        $current_balance = $this->account->get_balance();
+        $new_balance = $this->account->update_balance(
+            (float)$current_balance - (float)$amount,
+            $reason, $reason_detail
+        );
+
+        return $new_balance;    
+    }
+
+    function credit( $amount = 0, $reason = "", $reason_detail = "" ) {
+        $current_balance = $this->account->get_balance();
+        $new_balance = $this->account->update_balance(
+            (float)$current_balance + (float)$amount,
+            $reason, $reason_detail
+        );
+
+        return $new_balance;    
+    }
+
     function update_balance( $amount = 0, $reason = "", $reason_detail = "" ) {
         $this->db->insert('balance', 
             array(

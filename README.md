@@ -17,22 +17,27 @@ Just name dev stuff traderloo for now
 
 - GET /stocks
     - Returns a list of stocks to trade
+    - DONE, too slow needs work
 
 - GET /stocks/{code}
     - Returns details for the specified stock
+    - DONE
 
 - GET /trades
     - Returns a list of all trades
+    - DONE
 
 - POST /trades
-    - Must be called with trade params
+    - Must be called with symbol and quantity params
     - Opens and performs execution for new trade
-    - Returns trade id on success
+    - Returns trade object on success
+    - DONE
 
-- PUT /trades/{id}
-    - Must be called with trade params
+- PUT /trades
+    - Must be called with trade_id as param
     - Use this end point to close the specified trade
-    - Returns the trade id on success
+    - Returns the trade object on success
+    - DONE
 
 - Additional notes
     - Every API call is first validated for a session
