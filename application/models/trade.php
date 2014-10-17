@@ -9,12 +9,12 @@ class trade extends CI_Model{
                     'stock' => $stock->symbol,
                     'shares' => $quantity,
                     'opened_user' => $this->session->userdata('user_id'),
-                    'opened_price' => $stock->Ask,
+                    'opened_price' => $stock->LastTradePriceOnly,
                     'opened_datetime' => time()
                 )
             );            
             
-            $cost = (float)$stock->Ask * (float)$quantity; 
+            $cost = (float)$stock->LastTradePriceOnly * (float)$quantity; 
             $new_balance = $this->account->deduct( (float)$cost );
             return $this->trade->retrieve_by_id( $trade_id );
 

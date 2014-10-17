@@ -12,8 +12,8 @@ class stock extends CI_Model{
             $response = rest_curl( $full_query );
             $response_decoded = json_decode($response); 
             
-            if ( isset($response_decoded->query->results->quote->Ask) ) {
-                if ( $response_decoded->query->results->quote->Ask ) {
+            if ( isset($response_decoded->query->results->quote->LastTradePriceOnly) ) {
+                if ( $response_decoded->query->results->quote->LastTradePriceOnly ) {
                     return $response_decoded->query->results->quote;  
                 }
             } 
