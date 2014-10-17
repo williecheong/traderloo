@@ -15,7 +15,6 @@ class API_Controller extends REST_Controller {
             )
         );
 
-        $this->facebook_url = '';    
         $this->facebook_user = $this->facebook->getUser();
         
         if ( $this->facebook_user ) {

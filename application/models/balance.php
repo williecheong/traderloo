@@ -1,10 +1,10 @@
 <?php
 
-class account extends CI_Model{
+class balance extends CI_Model{
     
     function debit( $amount = 0, $reason = "", $reason_detail = "" ) {
-        $current_balance = $this->account->get_balance();
-        $new_balance = $this->account->update_balance(
+        $current_balance = $this->balance->get_current();
+        $new_balance = $this->balance->insert(
             (float)$current_balance - (float)$amount,
             $reason, $reason_detail
         );
@@ -13,8 +13,8 @@ class account extends CI_Model{
     }
 
     function credit( $amount = 0, $reason = "", $reason_detail = "" ) {
-        $current_balance = $this->account->get_balance();
-        $new_balance = $this->account->update_balance(
+        $current_balance = $this->balance->get_current();
+        $new_balance = $this->balance->insert(
             (float)$current_balance + (float)$amount,
             $reason, $reason_detail
         );
@@ -22,7 +22,7 @@ class account extends CI_Model{
         return $new_balance;    
     }
 
-    function update_balance( $amount = 0, $reason = "", $reason_detail = "" ) {
+    function insert( $amount = 0, $reason = "", $reason_detail = "" ) {
         $this->db->insert('balance', 
             array(
                 'value' => $amount,
@@ -30,10 +30,10 @@ class account extends CI_Model{
                 'reason_detail' => $reason_detail
             )
         );
-        return $this->account->get_balance();
+        return $this->balance->get_current();
     } 
 
-    function get_balance( $full_object = false ) {
+    function get_current( $full_object = false ) {
         $query = "select * from balance order by id DESC limit 1";
         $response = $this->db->query( $query );
         $results = $response->result();

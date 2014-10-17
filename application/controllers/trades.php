@@ -7,11 +7,13 @@ class Trades extends API_Controller {
         parent::__construct();
         $this->load->model('trade');
         $this->load->model('stock');
-        $this->load->model('account');
+        $this->load->model('balance');
     }
 
     public function index_get() {
-        return $this->trade->retrieve();
+        http_response_code("200");
+        header('Content-Type: application/json');
+        echo json_encode($this->trade->retrieve());   
     }
 
     public function index_post() {

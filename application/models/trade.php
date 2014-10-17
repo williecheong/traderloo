@@ -14,7 +14,7 @@ class trade extends CI_Model{
                 )
             );            
             
-            $new_balance = $this->account->debit( 
+            $new_balance = $this->balance->debit( 
                 (float)$stock->LastTradePriceOnly * (float)$quantity,
                 "opened_trade", $trade_id 
             );
@@ -40,7 +40,7 @@ class trade extends CI_Model{
                     )
                 );
 
-                $new_balance = $this->account->credit( 
+                $new_balance = $this->balance->credit( 
                     (float)$current_price * (float)$trade->shares,
                     "closed_trade", $trade->id 
                 );
@@ -51,6 +51,15 @@ class trade extends CI_Model{
         } else {
             return false;
         }
+    }
+
+    function retrieve_active() {
+        $query = array(
+            'closed_user' => NULL,
+            'closed_price' => NULL,
+            'closed_datetime' => NULL
+        );
+        return $this->trade->retrieve($query);
     }
 
     function retrieve_by_id( $id = 0 ) {
