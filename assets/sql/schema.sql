@@ -21,9 +21,14 @@ CREATE TABLE `trade` (
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-CREATE TABLE `account` (
-   `property` varchar(255),
+CREATE TABLE `balance` (
+   `id` int(11) not null auto_increment,
    `value` varchar(255),
+   `reason` varchar(255),
+   `reason_detail` varchar(255),
    `last_updated` timestamp default current_timestamp on update current_timestamp,
-   PRIMARY KEY (`property`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+INSERT INTO `balance` (`id`, `value`, `reason`, `reason_detail`) VALUES 
+('1', '1000000', 'initial_deposit', '');

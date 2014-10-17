@@ -14,8 +14,12 @@ class trade extends CI_Model{
                 )
             );            
             
-            $cost = (float)$stock->LastTradePriceOnly * (float)$quantity; 
-            $new_balance = $this->account->deduct( (float)$cost );
+            $current_balance = $this->account->get_balance();
+            $cost = (float)$stock->LastTradePriceOnly * (float)$quantity;
+            $new_balance = $this->account->update_balance( 
+                (float)$current_balance - (float)$cost,
+                "opened_trade", $trade_id 
+            );
             return $this->trade->retrieve_by_id( $trade_id );
         } catch ( Exception $e ) {
             return false;
@@ -39,8 +43,13 @@ class trade extends CI_Model{
                 );
 
                 $quantity = $trade->shares;
-                $value = (float)$current_price * (float)$quantity;
-                $new_balance = $this->account->credit( (float)$value );
+                $current_balance = $this->account->get_balance();
+                $holding_value = (float)$current_price * (float)$quantity;
+                $new_balance = $this->account->update_balance( 
+                    (float)$current_balance + (float)$holding_value,
+                    "closed_trade", $trade->id 
+                );
+                
                 return $this->trade->retrieve_by_id( $trade->id );
             } else {
                 return false;

@@ -2,39 +2,31 @@
 
 class account extends CI_Model{
     
-    function deduct( $amount = 0 ) {
-        $current_balance = $this->account->get_balance();
-        $new_balance = (float)$current_balance - (float)$amount;
-        $this->account->put_balance( $new_balance );
-        return $new_balance;
+    function update_balance( $amount = 0, $reason = "", $reason_detail = "" ) {
+        $this->db->insert('balance', 
+            array(
+                'value' => $amount,
+                'reason' => $reason,
+                'reason_detail' => $reason_detail
+            )
+        );
+        return $this->account->get_balance();
     } 
 
-    function credit( $amount = 0 ) {
-        $current_balance = $this->account->get_balance();
-        $new_balance = (float)$current_balance + (float)$amount;
-        $this->account->put_balance( $new_balance );
-        return $new_balance;
-    }    
-
-    function get_balance() {
-        $this->db->where('property', 'balance');
-        $query = $this->db->get('account');
-        $results = $query->result();
+    function get_balance( $full_object = false ) {
+        $query = "select * from balance order by id DESC limit 1";
+        $response = $this->db->query( $query );
+        $results = $response->result();
 
         if ( count($results) > 0 ) {
-            return $results[0]->value;
+            if ( $full_object ) {
+                return $results[0];
+            } else {
+                return $results[0]->value;
+            }
         } else {
             return false;
         }
-    }
-
-    function put_balance( $new_balance = 0 ) {
-        if ( $new_balance ) {
-            $this->db->where('property', 'balance');
-            $this->db->update('account', array('value' => $new_balance));            
-        }
-
-        return $this->account->get_balance();
     }
 }
 
