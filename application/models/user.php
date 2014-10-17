@@ -6,9 +6,6 @@ class user extends CI_Model{
         $user = $this->user->retrieve_by_id($facebook_id);
         
         if ( $user ) {
-            // user exists, 
-            // update image and name
-            // update last_active for last login
             $facebook_profile = $this->facebook->api('/me');
             $this->user->update(
                 array(
