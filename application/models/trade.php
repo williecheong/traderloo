@@ -17,8 +17,35 @@ class trade extends CI_Model{
             $cost = (float)$stock->LastTradePriceOnly * (float)$quantity; 
             $new_balance = $this->account->deduct( (float)$cost );
             return $this->trade->retrieve_by_id( $trade_id );
-
         } catch ( Exception $e ) {
+            return false;
+        }
+    }
+
+    function close( $trade = array() ) {
+        if ( $trade ) {
+            $stock = $this->stock->retrieve($trade->stock);
+            if ( $stock ) {
+                $current_price = $stock->LastTradePriceOnly;
+                $this->trade->update(
+                    array(
+                        'id' => $trade->id
+                    ),
+                    array(
+                        'closed_user' => $this->session->userdata('user_id'),
+                        'closed_price' => $stock->LastTradePriceOnly,
+                        'closed_datetime' => time()
+                    )
+                );
+
+                $quantity = $trade->shares;
+                $value = (float)$current_price * (float)$quantity;
+                $new_balance = $this->account->credit( (float)$value );
+                return $this->trade->retrieve_by_id( $trade->id );
+            } else {
+                return false;
+            }
+        } else {
             return false;
         }
     }

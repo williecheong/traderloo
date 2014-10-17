@@ -9,6 +9,13 @@ class account extends CI_Model{
         return $new_balance;
     } 
 
+    function credit( $amount = 0 ) {
+        $current_balance = $this->account->get_balance();
+        $new_balance = (float)$current_balance + (float)$amount;
+        $this->account->put_balance( $new_balance );
+        return $new_balance;
+    }    
+
     function get_balance() {
         $this->db->where('property', 'balance');
         $query = $this->db->get('account');

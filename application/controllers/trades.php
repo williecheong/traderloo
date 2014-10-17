@@ -26,7 +26,7 @@ class Trades extends API_Controller {
                     header('Content-Type: application/json');
                     echo json_encode($trade);   
                 } else {
-                    http_response_code("201");
+                    http_response_code("417");
                     header('Content-Type: application/json');
                     echo $this->message("Unexpected error occurred: 58mh8");
                 }
@@ -39,6 +39,40 @@ class Trades extends API_Controller {
             http_response_code("400");
             header('Content-Type: application/json');
             echo $this->message("Stock not specified");
+        }
+        return;
+    }
+
+    public function index_put() {
+        $trade_id = $this->put('trade_id');
+        if ( $trade_id ) {
+            $trade = $this->trade->retrieve_by_id($trade_id);
+            if ( $trade ) {
+                if ( ! $trade->closed_user ) {
+                    $trade = $this->trade->close($trade);
+                    if ( $trade ) {
+                        http_response_code("202");
+                        header('Content-Type: application/json');
+                        echo json_encode($trade);   
+                    } else {
+                        http_response_code("417");
+                        header('Content-Type: application/json');
+                        echo $this->message("Unexpected error occurred: ku8yg");
+                    }
+                } else {    
+                    http_response_code("410");
+                    header('Content-Type: application/json');
+                    echo $this->message("Trade has been closed");
+                }
+            } else {
+                http_response_code("404");
+                header('Content-Type: application/json');
+                echo $this->message("Trade not found");            
+            }
+        } else {
+            http_response_code("400");
+            header('Content-Type: application/json');
+            echo $this->message("Trade not specified");
         }
         return;
     }
