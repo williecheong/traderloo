@@ -1,15 +1,16 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" ng-app="myApp" ng-controller="myController"> <!--<![endif]-->
     <head>
+        <title><?=APP_NAME?> :: {{ account.current_balance || 0 | currency }}</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title><?=APP_NAME?> - {{ balance }}</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <meta name="description" content="Everybody trades from one account. Don't fuck me over.">
+        <link rel="image_src"  href="/assets/img/updownfire.gif">
+        <link rel="icon" href="/assets/img/<?=ENVIRONMENT?>.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="/assets/img/<?=ENVIRONMENT?>.ico" type="image/x-icon">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="/assets/css/normalize.min.css">
@@ -22,18 +23,37 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <div class="container">
-            <div>
-                {{ visualizations }}
+            <div class="well well-sm">
+                visualizations {{ hello }}
             </div>
             <div class="row">
                 <div class="col-lg-10">
                     <div class="well well-sm">
-                        {{ activeTradesTable }}
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li ng-class="{'active':selectedTab=='active'}" ng-click="selectedTab='active'">
+                                <a href="">Active</a>
+                            </li>
+                            <li ng-class="{'active':selectedTab=='history'}" ng-click="selectedTab='history'">
+                                <a href="">History</a>
+                            </li>
+                            <li ng-class="{'active':selectedTab=='open'}" ng-click="selectedTab='open'">
+                                <a href="">Open</a>
+                            </li>
+                        </ul>
+                        <div class="well" ng-show="selectedTab=='active'">
+                            activeTradesTable
+                        </div>
+                        <div class="well" ng-show="selectedTab=='history'">
+                            history table
+                        </div>
+                        <div class="well" ng-show="selectedTab=='open'">
+                            mess around with new trades
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-2">
-                    <div class="well well-sm">
-                        {{ activeUsers }}
+                <div class="col-lg-2 visible-lg">
+                    <div class="well well-sm" style="min-height:100px;">
+                        activeUsers
                     </div>
                 </div>
             </div>
@@ -44,7 +64,7 @@
         </div>
 
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap.min.js"></script>
         <script src="/assets/js/plugins.js"></script>
         <script src="/assets/js/main.js"></script>
 

@@ -30,18 +30,23 @@ class Main extends CI_Controller {
         } else {
             $this->facebook_url = $this->facebook->getLoginUrl(
                 array(
-                    "display" => "page"
+                    "display" => "page",
+                    "next" => base_url() . 'main/logout'
                 )
             );
         }
     }
     
-	public function index( $load_personal = false ) {
+	public function index() {
         // Is session available when user is requesting the personal page?
-        if ( $this->session->userdata('user_id') ) {
-            $this->load->view('main');
+        if ( $this->input->get('code') || $this->input->get('state') ) {
+            redirect( base_url() );
         } else {
-            $this->load->view('main_logged_out');
+            if ( $this->session->userdata('user_id') ) {
+                $this->load->view('main');
+            } else {
+                $this->load->view('main_logged_out');
+            }
         }
     }
 
