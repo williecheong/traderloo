@@ -23,7 +23,10 @@ body {
     font-family: Lora,"Helvetica Neue",Helvetica,Arial,sans-serif;
     color: #fff;
     background-color: #000;
-    background: url(../img/updownfire.gif) no-repeat center center scroll;
+    background-image: url(../img/updownfire.gif);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: scroll;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
