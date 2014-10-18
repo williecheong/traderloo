@@ -13,7 +13,6 @@
         <link rel="shortcut icon" href="/assets/img/<?=ENVIRONMENT?>.ico" type="image/x-icon">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/assets/css/normalize.min.css">
         <link rel="stylesheet" href="/assets/css/main.css">
 
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
