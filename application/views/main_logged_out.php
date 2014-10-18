@@ -4,12 +4,13 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
+        <title><?=APP_NAME?></title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title><?=APP_NAME?> - {{ balance }}</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <meta name="description" content="Everybody trades from one account. Don't fuck me over.">
+        <link rel="image_src"  href="/assets/img/updownfire.gif">
+        <link rel="icon" href="/assets/img/<?=ENVIRONMENT?>.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="/assets/img/<?=ENVIRONMENT?>.ico" type="image/x-icon">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="/assets/css/normalize.min.css">
@@ -28,12 +29,14 @@
                     <div class="col-md-8 col-md-offset-2">
                         <h1 class="brand-heading">umngo</h1>
                         <p class="intro-text">
-                            One account 
-                            <i class="fa fa-times-circle"></i>
-                            Many traders
+                            One account <i class="fa fa-times-circle"></i> Many traders
+                            <br>
+                            <small>
+                                "Don't fuck me over" - <a href="//williecheong.com">w.cheong</a>
+                            </small>
                         </p>
                         <a class="btn btn-default btn-lg" href="<?= $this->facebook_url; ?>">
-                            <i class="fa fa-facebook-square"></i>
+                            <i class="fa fa-facebook-square fa-lg"></i>
                             Join the party
                         </a>
                     </div>
