@@ -4,7 +4,6 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" ng-app="myApp" ng-controller="myController"> <!--<![endif]-->
     <head>
-        <title><?=APP_NAME?></title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="description" content="Everybody trades from one account. Don't fuck me over.">
@@ -15,7 +14,9 @@
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="/assets/css/normalize.min.css">
         <link rel="stylesheet" href="/assets/css/main.css">
-
+        
+        <title ng-bind-template="<?=APP_NAME?> :: {{ account.current_balance || 0 | currency }}"></title>
+        
         <script src="/assets/js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
