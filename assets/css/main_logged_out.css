@@ -158,6 +158,11 @@ div#main-content {
     background-color: #3B5998;
 }
 
+.btn.btn-wide {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
 ::-moz-selection {
     text-shadow: none;
     background: #fcfcfc;
