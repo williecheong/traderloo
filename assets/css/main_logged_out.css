@@ -49,14 +49,6 @@ p {
     line-height: 1.5;
 }
 
-@media(min-width:767px) {
-    p {
-        margin: 0 0 35px;
-        font-size: 20px;
-        line-height: 1.6;
-    }
-}
-
 a {
     color: #3B5998;
     -webkit-transition: all .2s ease-in-out;
@@ -92,24 +84,9 @@ a:focus {
     font-size: 18px;
 }
 
-div#main-content {
-    
+div#main-content {   
+    padding: 20px;
     background-color: rgba(25, 25, 25, 0.5);
-}
-
-@media(min-width:767px) {
-    .intro {
-        height: 100%;
-        padding: 0;
-    }
-
-    .intro .intro-body .brand-heading {
-        font-size: 100px;
-    }
-
-    .intro .intro-body .intro-text {
-        font-size: 25px;
-    }
 }
 
 @-webkit-keyframes pulse {    
