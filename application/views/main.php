@@ -14,9 +14,7 @@
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="/assets/css/normalize.min.css">
         <link rel="stylesheet" href="/assets/css/main.css">
-        
         <title ng-bind-template="<?=APP_NAME?> :: {{ account.current_balance || 0 | currency }}"></title>
-        
         <script src="/assets/js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
@@ -46,7 +44,6 @@
                             </div>
                             <div class="col-lg-10">
                                 <div id="tabContent" ng-show="selectedTab=='active'">
-                                    <i class="fa fa-cubes"></i>
                                     activeTradesTable<br>
                                     activeTradesTable<br>
                                     activeTradesTable<br>
@@ -145,7 +142,7 @@
         </div>
         <div class="text-center" id="fineprint">
             <span class="lead">
-                <i class="fa fa-copyright"></i>
+                <i class="fa fa-cubes"></i>
                 <?=APP_NAME?> 
                 <?=date('Y')?>
             </span>
