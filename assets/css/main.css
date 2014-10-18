@@ -69,6 +69,10 @@ div#fineprint {
     .container {
         width: 100%;
     }
+
+    div#tabs {
+        text-align: center;
+    }
 }
 
 /* Small Devices, Tablets */
@@ -76,12 +80,20 @@ div#fineprint {
     .container {
         width: 100%;
     }
+
+    div#tabs {
+        text-align: center;
+    }
 }
 
 /* Medium Devices, Desktops */
 @media(min-width: 992px) {
     .container {
         width: 100%;
+    }
+
+    div#tabs {
+        text-align: center;
     }
 }
 
@@ -104,6 +116,10 @@ div#fineprint {
         height: 300px;
     }
 
+    div#tabs {
+        text-align: left;
+    }
+    
     div#tabContent {
         overflow-y: scroll;
     }
