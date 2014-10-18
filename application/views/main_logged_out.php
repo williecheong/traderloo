@@ -3,6 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" ng-app="myApp" ng-controller="myController"> <!--<![endif]-->
+    <title><?=APP_NAME?></title>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -15,7 +16,6 @@
         <link rel="stylesheet" href="/assets/css/normalize.min.css">
         <link rel="stylesheet" href="/assets/css/main_logged_out.css">
 
-        <title><?=APP_NAME?></title>
         
         <script src="/assets/js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
