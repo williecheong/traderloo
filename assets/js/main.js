@@ -1,7 +1,7 @@
 var app = angular.module('myApp', ['ui.bootstrap']);
 
 app.controller('myController', function( $scope, $sce, $http, $filter ) {
-	$scope.selectedTab = 'active';
+	$scope.selectedTab = 'history';
 
     $scope.getAccount = function() {
         $http.get(
