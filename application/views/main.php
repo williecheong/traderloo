@@ -54,13 +54,15 @@
                 <div class="col-lg-2 visible-lg">
                     <div class="well well-sm" style="min-height:100px;">
                         activeUsers
+                        <a class="btn btn-danger btn-sm" href="<?=$this->facebook_url?>">
+                            <i class="fa fa-sign-out"></i>
+                        </a>
                     </div>
                 </div>
             </div>
-            <a class="btn btn-danger btn-sm" href="<?=$this->facebook_url?>">
-                <i class="fa fa-sign-out"></i>
-                Sign out
-            </a>
+            <div style="padding-left:20px;">
+                <i class="fa fa-cubes"></i> <?=APP_NAME?> <?=date('Y')?>
+            </div>
         </div>
 
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
