@@ -27,7 +27,7 @@
             <div class="intro-body">
                 <div class="row" id="main-content">
                     <div class="col-md-8 col-md-offset-2">
-                        <h1 class="brand-heading">umngo</h1>
+                        <h1 class="brand-heading"><?=APP_NAME?></h1>
                         <p class="intro-text">
                             One account <i class="fa fa-times-circle"></i> Many traders
                             <br>
