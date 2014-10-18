@@ -30,13 +30,9 @@ body {
 
 a {
     color: #E3E3E3;
-    -webkit-transition: all .2s ease-in-out;
-    -moz-transition: all .2s ease-in-out;
-    transition: all .2s ease-in-out;
 }
 
-a:hover,
-a:focus {
+a:hover, a:focus {
     text-decoration: none;
     color: #11505d;
 }
@@ -47,6 +43,15 @@ a:focus {
     padding-top: 10px;
     padding-bottom: 10px;
     background-color: rgba( 230, 230, 230, 0.2 );
+}
+
+div#tabs ul {
+    margin: 0em 0px;
+}
+
+div#tabContent {
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .well {
@@ -97,10 +102,6 @@ div#fineprint {
 
     div#interactions {
         height: 300px;
-    }
-
-    div#tabs ul {
-        margin: 0em 0px;
     }
 
     div#tabContent {
