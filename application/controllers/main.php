@@ -38,6 +38,8 @@ class Main extends CI_Controller {
     
 	public function index( $load_personal = false ) {
         // Is session available when user is requesting the personal page?
+        echo ENVIRONMENT;
+        die();
         if ( $this->session->userdata('user_id') ) {
             $this->load->view('main');
         } else {
