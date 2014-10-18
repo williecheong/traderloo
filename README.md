@@ -18,7 +18,7 @@ Just name dev stuff traderloo for now
 
 - GET /account/balances
     - Returns an array of all balances
-    -    
+    - DONE   
 
 - GET /stocks
     - Returns a list of stocks to trade
