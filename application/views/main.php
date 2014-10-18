@@ -45,6 +45,7 @@
                             </div>
                             <div class="col-lg-10">
                                 <div id="tabContent" ng-show="selectedTab=='active'">
+                                    <i class="fa fa-cubes"></i>
                                     activeTradesTable<br>
                                     activeTradesTable<br>
                                     activeTradesTable<br>
