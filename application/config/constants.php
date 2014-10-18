@@ -7,7 +7,7 @@
 |--------------------------------------------------------------------------
 */
 
-define('APP_NAME',          'Traderloo');
+define('APP_NAME',          'umngo');
 define('FB_APPID',          '347239935437437');
 define('FB_SECRET',         'd038b5f41d8dd2d101e4aee676e396cf');
 

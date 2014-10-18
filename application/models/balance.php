@@ -48,6 +48,12 @@ class balance extends CI_Model{
             return false;
         }
     }
+
+    function get_all() {
+        $this->db->order_by("id", "desc"); 
+        $query = $this->db->get('balance');
+        return $query->result();
+    }
 }
 
 ?>

@@ -48,10 +48,10 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'mysql.traderloo.williecheong.com';
-$db['default']['username'] = 'traderloo';
-$db['default']['password'] = 'NRwmfx8t';
-$db['default']['database'] = 'traderloo_db';
+$db['default']['hostname'] = 'mysql.umngo.com';
+$db['default']['username'] = 'umngo';
+$db['default']['password'] = 'umngo_db_pw';
+$db['default']['database'] = 'umngo_dev_db';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

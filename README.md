@@ -16,6 +16,10 @@ Just name dev stuff traderloo for now
     - Includes a list of unclosed trades
     - DONE
 
+- GET /account/balances
+    - Returns an array of all balances
+    -    
+
 - GET /stocks
     - Returns a list of stocks to trade
     - DONE, too slow needs work
