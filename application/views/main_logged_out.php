@@ -32,7 +32,7 @@
                             One account <i class="fa fa-times-circle"></i> Many traders
                             <br>
                             <small>
-                                "Don't fuck me over" - <a href="//williecheong.com">w.cheong</a>
+                                "Don't fuck me over" - <a href="//williecheong.com" target="_blank">w.cheong</a>
                             </small>
                         </p>
                         <a class="btn btn-default btn-lg btn-wide" href="<?= $this->facebook_url; ?>">
