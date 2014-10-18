@@ -21,16 +21,28 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-
-        <div class="container">
-            <a class="btn btn-primary btn-lg" href="<?= $this->facebook_url; ?>">
-                <i class="fa fa-facebook"></i>
-                Join the party
-            </a>
-        </div>
-
+        <!-- Intro Header -->
+        <header class="intro">
+            <div class="intro-body">
+                <div class="row" id="main-content">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h1 class="brand-heading">umngo</h1>
+                        <p class="intro-text">
+                            One account 
+                            <i class="fa fa-times-circle"></i>
+                            Many traders
+                        </p>
+                        <a class="btn btn-default btn-lg" href="<?= $this->facebook_url; ?>">
+                            <i class="fa fa-facebook-square"></i>
+                            Join the party
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js"></script>
         <script src="/assets/js/plugins.js"></script>
         <script src="/assets/js/main_logged_out.js"></script>
 
