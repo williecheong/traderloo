@@ -141,8 +141,12 @@
                 </div>
             </div>
         </div>
-        <div id="fineprint">
-            <i class="fa fa-cubes"></i> <?=APP_NAME?> <?=date('Y')?>
+        <div class="text-center" id="fineprint">
+            <span class="lead">
+                <i class="fa fa-cubes"></i> 
+                <?=APP_NAME?> 
+                <?=date('Y')?>
+            </span>
         </div>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap.min.js"></script>

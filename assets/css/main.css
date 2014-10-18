@@ -56,7 +56,7 @@ a:focus {
 }
 
 div#fineprint {
-    padding-left: 20px;
+    color: rgb( 160, 160, 160 );
 }
 
 /* Extra Small Devices, Phones */
@@ -105,12 +105,6 @@ div#fineprint {
 
     div#tabContent {
         overflow-y: scroll;
-    }
-
-    div#fineprint {
-        width: 1170px;
-        margin-left: auto;
-        margin-right: auto;
     }
 }
 
