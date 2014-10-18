@@ -37,10 +37,6 @@ a:hover, a:focus {
     color: #11505d;
 }
 
-i.fa {
-    text-rendering: auto;
-}
-
 .container {
     margin-top: 10px;
     margin-bottom: 10px;
