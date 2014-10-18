@@ -143,7 +143,7 @@
         </div>
         <div class="text-center" id="fineprint">
             <span class="lead">
-                <i class="fa fa-cubes"></i> 
+                <span><i class="fa fa-cubes"></i></span>
                 <?=APP_NAME?> 
                 <?=date('Y')?>
             </span>
