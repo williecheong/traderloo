@@ -26,12 +26,15 @@
                     <div class="col-md-8 col-md-offset-2">
                         <h1 class="brand-heading"><?=APP_NAME?></h1>
                         <p class="intro-text">
-                            One account <i class="fa fa-times-circle"></i> Many traders<br>
+                            One account 
+                            <i class="fa fa-times-circle" tooltip-html-unsafe="{{ tooltipContent() }}" tooltip-trigger="click" ng-class="{'fa-spin': xClick, 'text-warning': xClick}" ng-click="xClick=!xClick"></i> 
+                            Many traders
+                            <br>
                             <small>
                                 "Don't fuck this up" - <a href="//williecheong.com" target="_blank">w.cheong</a>
                             </small>
                         </p>
-                        <a class="btn btn-default btn-lg btn-wide" href="<?= $this->facebook_url; ?>">
+                        <a class="btn btn-default btn-lg btn-wide unround" href="<?= $this->facebook_url; ?>">
                             <i class="fa fa-facebook-square fa-lg"></i>
                             Join the party
                         </a>
@@ -41,7 +44,7 @@
         </header>
         
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
         <script src="/assets/js/main_logged_out.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
