@@ -43,7 +43,6 @@
         
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap.min.js"></script>
-        <script src="/assets/js/plugins.js"></script>
         <script src="/assets/js/main_logged_out.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

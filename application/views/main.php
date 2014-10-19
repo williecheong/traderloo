@@ -11,8 +11,6 @@
         <link rel="image_src"  href="/assets/img/updownfire.gif">
         <link rel="icon" href="/assets/img/<?=ENVIRONMENT?>.ico" type="image/x-icon">
         <link rel="shortcut icon" href="/assets/img/<?=ENVIRONMENT?>.ico" type="image/x-icon">
-    </head>
-    <head>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="/assets/css/main.css">
@@ -149,7 +147,6 @@
         </div>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap.min.js"></script>
-        <script src="/assets/js/plugins.js"></script>
         <script src="/assets/js/main.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
