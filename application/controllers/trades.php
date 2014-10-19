@@ -5,6 +5,7 @@ class Trades extends API_Controller {
     
     function __construct() {
         parent::__construct();
+        $this->load->model('user');
         $this->load->model('trade');
         $this->load->model('stock');
         $this->load->model('balance');
@@ -15,6 +16,18 @@ class Trades extends API_Controller {
         header('Content-Type: application/json');
         echo json_encode($this->trade->retrieve());   
     }
+
+    public function active_get() {
+        http_response_code("200");
+        header('Content-Type: application/json');
+        echo json_encode($this->trade->retrieve_active());           
+    }
+
+    public function history_get() {
+        http_response_code("200");
+        header('Content-Type: application/json');
+        echo json_encode($this->trade->retrieve_history());           
+    }    
 
     public function index_post() {
         $symbol = $this->post('symbol');

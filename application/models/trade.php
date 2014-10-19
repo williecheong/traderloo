@@ -62,6 +62,37 @@ class trade extends CI_Model{
         return $this->trade->retrieve($query);
     }
 
+    function retrieve_history() {
+        $query = array(
+            'closed_user IS NOT NULL' => NULL,
+            'closed_price IS NOT NULL' => NULL,
+            'closed_datetime IS NOT NULL' => NULL
+        );
+        return $this->trade->retrieve($query);
+    }
+
+    function transform_users( $trades = array() ) {
+        foreach ($trades as $key => $trade) {
+            if ( $trade->opened_user ) {
+                $trades[$key]->opened_user = $this->user->public_safe(
+                    $this->user->retrieve_by_id( 
+                        $trade->opened_user
+                    ) 
+                );
+            }
+
+            if ( $trade->closed_user ) {
+                $trades[$key]->closed_user = $this->user->public_safe(
+                    $this->user->retrieve_by_id( 
+                        $trade->closed_user 
+                    )
+                );
+            }
+        }
+        
+        return $trades;
+    }
+
     function retrieve_by_id( $id = 0 ) {
         $objects = $this->trade->retrieve(
             array(
@@ -86,7 +117,7 @@ class trade extends CI_Model{
     function retrieve( $data = array() ){
         $this->db->where($data);
         $query = $this->db->get('trade');
-        return $query->result();
+        return $this->trade->transform_users( $query->result() );
     }
     
     function update( $criteria = array(), $new_data = array() ){

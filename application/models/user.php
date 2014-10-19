@@ -37,6 +37,13 @@ class user extends CI_Model{
         }
     }
 
+    function public_safe( $user = array() ) {
+        unset( $user->rating );
+        unset( $user->last_login );
+        unset( $user->last_updated );
+        return $user;
+    }
+
     function retrieve_active() {
         return $this->user->retrieve(
             array(
