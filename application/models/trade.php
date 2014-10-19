@@ -115,6 +115,7 @@ class trade extends CI_Model{
     }
 
     function retrieve( $data = array() ){
+        $this->db->order_by("id", "desc"); 
         $this->db->where($data);
         $query = $this->db->get('trade');
         return $this->trade->transform_users( $query->result() );

@@ -45,6 +45,16 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
             'url': '/account'
         }).success(function(data, status, headers, config) {
             $scope.accountInformation = data;
+            angular.forEach(data.active_trades, function(trade, key){
+                $scope.getStock(trade.stock, function(stock){
+                    if ( stock.LastTradePriceOnly ) {
+                         $scope.accountInformation.active_trades[key].profit = ((stock.LastTradePriceOnly-trade.opened_price)*trade.shares);
+                    } else {
+                        return false;
+                    }
+                });
+            });
+
         }).error(function(data, status, headers, config) {
             // called asynchronously if an error occurs
             // or server returns response with an error status.
@@ -68,7 +78,12 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
             'method': 'GET',
             'url': '/trades/history'
         }).success(function(data, status, headers, config) {
+            angular.forEach(data, function(trade, key){
+                data[key].profit = ((trade.closed_price-trade.opened_price)*trade.shares);
+            });
+
             $scope.tradeHistory = data;
+            
         }).error(function(data, status, headers, config) {
             // called asynchronously if an error occurs
             // or server returns response with an error status.
@@ -87,30 +102,55 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
         });
     };
 
+    $scope.getClosedTradeProfit = function(trade) {
+        if ( trade.closed_price ) {
+            // This is a closed trade, use recorded closing price
+            return ((trade.closed_price-trade.opened_price)*trade.shares);
+        } else {
+            // This is an active trade, can't handle this here
+            return false;
+        }
+    };
+
+    $scope.getStock = function(symbol, callback) {
+        $http({
+            'method': 'GET',
+            'url': '/stocks?symbol=' + symbol
+        }).success(function(data, status, headers, config) {
+            callback(data);
+        }).error(function(data, status, headers, config) {
+            callback(false);
+        });
+    }
+
     $scope.switchTab = function(tab) {
         if ( tab == 'active' ) {
             $scope.selectedTab = tab;
-            delete $scope.accountInformation.active_trades;
         } else if ( tab == 'history' ) {
             $scope.selectedTab = tab;
-            delete $scope.tradeHistory;
         } else if ( tab == 'open' ) {
             $scope.selectedTab = tab;
         } else {
             $scope.switchTab('active');
         }
-        $scope.executeLoad();
+        $scope.executeLoad(true);
     }
 
-    $scope.executeLoad = function() {
+    $scope.executeLoad = function(hardReset) {
         $scope.getAccountBalances();
         
         if ( $scope.selectedTab == 'active' ) {
             $scope.getAccountInformation();
+            if ( hardReset ) {
+                delete $scope.accountInformation.active_trades;
+            }
         } 
         
         if ( $scope.selectedTab == 'history' ) {
             $scope.getTradeHistory();
+            if ( hardReset ) {
+                delete $scope.tradeHistory;
+            }
         }
 
         if ( window.innerWidth > 1200 ) {
@@ -139,3 +179,4 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
         return explodeName[0];
     };
 });
+

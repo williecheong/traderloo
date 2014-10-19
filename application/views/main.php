@@ -51,10 +51,9 @@
                                     <table class="table table-condensed" ng-if="accountInformation.active_trades">
                                         <thead>
                                             <tr>
-                                                <th>Trader</th>
                                                 <th>Stock</th>
                                                 <th>Shares</th>
-                                                <th>Opened on</th>
+                                                <th>Opening</th>
                                                 <th>Net profit</th>
                                                 <th>Action</th>
                                             </tr>
@@ -62,26 +61,25 @@
                                         <tbody>
                                             <tr ng-repeat="trade in accountInformation.active_trades">
                                                 <td>
-                                                    <a href="" tooltip-html-unsafe="{{ trade.opened_user | tooltipProfile }}">
-                                                        <i class="fa fa-user"></i>
-                                                        {{ trade.opened_user.name | firstName }}
-                                                    </a>
+                                                    <a href="//www.google.com/finance?q={{trade.stock|uppercase}}" target="_blank" ng-bind="trade.stock | uppercase"></a>
                                                 </td>
-                                                <td ng-bind="trade.stock | uppercase"></td>
                                                 <td ng-bind-template="{{trade.shares}} units"></td>
                                                 <td>
-                                                    <a href="" tooltip="{{''+trade.opened_datetime+'000' | date:'shortTime'}}">
+                                                    <a href="" tooltip-html-unsafe="{{ trade.opened_user | tooltipProfile }}">
+                                                        <i class="fa fa-user fa-lg"></i>
+                                                    </a>
+                                                    <a href="" tooltip-html-unsafe="{{''+trade.opened_datetime+'000' | date:'EEEE<br>MMMM d, y<br>h:mm a'}}">
                                                         <i class="fa fa-clock-o fa-lg"></i>
                                                     </a>
-                                                    {{ ''+trade.opened_datetime+'000' | date:'longDate' }}
+                                                    {{ ''+trade.opened_datetime+'000' | date:'MMM-dd' }}
                                                     @ {{ trade.opened_price | currency }}
                                                 </td>
                                                 <td>
-                                                    <div ng-if="trade.profit">
-                                                        <strong class="text-success" ng-if="trade.profit>0" ng-bind="trade.profit"></strong>
-                                                        <strong class="text-danger" ng-if="trade.profit=<0" ng-bind="trade.profit * -1"></strong>
+                                                    <div ng-if="trade.hasOwnProperty('profit')">
+                                                        <strong class="text-success" ng-if="trade.profit>0" ng-bind="trade.profit | currency"></strong>
+                                                        <strong class="text-danger" ng-if="trade.profit<=0" ng-bind="trade.profit*-1 | currency"></strong>
                                                     </div>
-                                                    <div ng-if="!trade.profit">
+                                                    <div ng-if="!trade.hasOwnProperty('profit')">
                                                         <i class="fa fa-gear fa-spin"></i> Calculating
                                                     </div>
                                                 </td>
@@ -119,27 +117,39 @@
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="trade in tradeHistory">
-                                                <td ng-bind="trade.stock | uppercase"></td>
+                                                <td>
+                                                    <a href="//www.google.com/finance?q={{trade.stock|uppercase}}" target="_blank" ng-bind="trade.stock | uppercase"></a>
+                                                </td>
                                                 <td ng-bind-template="{{trade.shares}} units"></td>
                                                 <td>
                                                     <a href="" tooltip-html-unsafe="{{ trade.opened_user | tooltipProfile }}">
                                                         <i class="fa fa-user fa-lg"></i>
                                                     </a>
-                                                    <a href="" tooltip="{{''+trade.opened_datetime+'000' | date:'shortTime'}}">
+                                                    <a href="" tooltip-html-unsafe="{{''+trade.opened_datetime+'000' | date:'EEEE<br>MMMM d, y<br>h:mm a'}}">
                                                         <i class="fa fa-clock-o fa-lg"></i>
                                                     </a>
-                                                    {{ ''+trade.opened_datetime+'000' | date:'longDate' }}
+                                                    {{ ''+trade.opened_datetime+'000' | date:'MMM-dd' }}
+                                                    @ {{ trade.opened_price | currency }}
                                                 </td>
                                                 <td>
                                                     <a href="" tooltip-html-unsafe="{{ trade.closed_user | tooltipProfile }}">
                                                         <i class="fa fa-user fa-lg"></i>
                                                     </a>
-                                                    <a href="" tooltip="{{''+trade.closed_datetime+'000' | date:'shortTime'}}">
+                                                    <a href="" tooltip-html-unsafe="{{''+trade.closed_datetime+'000' | date:'EEEE<br>MMMM d, y<br>h:mm a'}}">
                                                         <i class="fa fa-clock-o fa-lg"></i>
                                                     </a>
-                                                    {{ ''+trade.closed_datetime+'000' | date:'longDate' }}
+                                                    {{ ''+trade.closed_datetime+'000' | date:'MMM-dd' }}
+                                                    @ {{ trade.opened_price | currency }}
                                                 </td>
-                                                <td></td>
+                                                <td>
+                                                    <div ng-if="trade.hasOwnProperty('profit')">
+                                                        <strong class="text-success" ng-if="trade.profit>0" ng-bind="trade.profit | currency"></strong>
+                                                        <strong class="text-danger" ng-if="trade.profit<=0" ng-bind="trade.profit*-1 | currency"></strong>
+                                                    </div>
+                                                    <div ng-if="!trade.hasOwnProperty('profit')">
+                                                        <i class="fa fa-gear fa-spin"></i> Calculating
+                                                    </div>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
