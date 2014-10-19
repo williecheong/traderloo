@@ -21,7 +21,7 @@ class Account extends API_Controller {
         echo json_encode($return_object);  
     }
 
-    public function balance_get() {
+    public function balances_get() {
         http_response_code("200");
         header('Content-Type: application/json');
         echo json_encode( $this->balance->get_all() );

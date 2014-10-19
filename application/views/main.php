@@ -4,7 +4,7 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html ng-app="myApp" ng-controller="myController"> <!--<![endif]-->
     <head>
-        <title ng-bind-template="<?=APP_NAME?> :: {{ account.current_balance || 0 | currency }}"></title>
+        <title ng-bind-template="<?=APP_NAME?> :: {{ accountInformation.current_balance || 0 | currency }}"></title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="description" content="Everybody trades from one account. Don't fuck me over.">
@@ -21,7 +21,13 @@
         <![endif]-->
         <div class="container">
             <div class="well well-sm" id="visualizations">
-                visualizations {{ hello }}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="balanceInformation">
+                            <pre ng-bind="accountBalances | json"></pre>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row" id="interactions">
                 <div class="col-lg-10">
@@ -130,10 +136,15 @@
                 </div>
                 <div class="col-lg-2 visible-lg">
                     <div class="well well-sm">
-                        activeUsers
-                        <a class="btn btn-danger btn-sm" href="<?=$this->facebook_url?>">
-                            <i class="fa fa-sign-out"></i>
-                        </a>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id="activeUsers">
+                                    <a class="btn btn-danger btn-sm" href="<?=$this->facebook_url?>">
+                                        <i class="fa fa-sign-out"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
