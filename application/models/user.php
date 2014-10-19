@@ -13,6 +13,7 @@ class user extends CI_Model{
                 ),
                 array(
                     'name' =>$facebook_profile['name'],
+                    'email' => ( isset($facebook_profile['email']) ) ? $facebook_profile['email'] : '',
                     'last_login' => time()
                 )
             );
@@ -27,6 +28,7 @@ class user extends CI_Model{
                 array(
                     'id' => $facebook_id,
                     'name' => $facebook_profile['name'],
+                    'email' => ( isset($facebook_profile['email']) ) ? $facebook_profile['email'] : '',
                     'last_login' => time()
                 )
             );
@@ -38,6 +40,7 @@ class user extends CI_Model{
     }
 
     function public_safe( $user = array() ) {
+        unset( $user->email );
         unset( $user->rating );
         unset( $user->last_login );
         unset( $user->last_updated );

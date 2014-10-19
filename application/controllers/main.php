@@ -22,6 +22,8 @@ class Main extends CI_Controller {
             // Always returns the local user ID of this person from our database.
             $user = $this->user->try_register( $this->facebook_user );
             $this->session->set_userdata('user_id', $user->id);
+            $this->session->set_userdata('name', $user->name);
+            
             $this->facebook_url = $this->facebook->getLogouturl(
                 array(
                     "next" => base_url() . 'main/logout'
@@ -30,8 +32,8 @@ class Main extends CI_Controller {
         } else {
             $this->facebook_url = $this->facebook->getLoginUrl(
                 array(
-                    "display" => "page",
-                    "next" => base_url() . 'main/logout'
+                    "scope" => "email",
+                    "display" => "page"
                 )
             );
         }

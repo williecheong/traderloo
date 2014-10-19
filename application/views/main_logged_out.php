@@ -7,7 +7,7 @@
         <title><?=APP_NAME?></title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="description" content="Everybody trades from one account. Don't fuck me over.">
+        <meta name="description" content="<?=APP_DESCRIPTION?>">
         <link rel="image_src"  href="/assets/img/updownfire.gif">
         <link rel="icon" href="/assets/img/<?=ENVIRONMENT?>.ico" type="image/x-icon">
         <link rel="shortcut icon" href="/assets/img/<?=ENVIRONMENT?>.ico" type="image/x-icon">
@@ -26,10 +26,9 @@
                     <div class="col-md-8 col-md-offset-2">
                         <h1 class="brand-heading"><?=APP_NAME?></h1>
                         <p class="intro-text">
-                            One account <i class="fa fa-times-circle"></i> Many traders
-                            <br>
+                            One account <i class="fa fa-times-circle"></i> Many traders<br>
                             <small>
-                                "Don't fuck me over" - <a href="//williecheong.com" target="_blank">w.cheong</a>
+                                "Don't fuck this up" - <a href="//williecheong.com" target="_blank">w.cheong</a>
                             </small>
                         </p>
                         <a class="btn btn-default btn-lg btn-wide" href="<?= $this->facebook_url; ?>">

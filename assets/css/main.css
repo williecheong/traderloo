@@ -2,12 +2,6 @@
    Author's custom styles
    ========================================================================== */
 
-* {
-    border-radius: 0 !important;
-    -moz-border-radius: 0 !important;
-    -webkit-border-radius: 0 !important;
-}
-
 html {
     width: 100%;
     height: 100%;
@@ -28,12 +22,12 @@ body {
 }
 
 a {
-    color: #E3E3E3;
+    color: #11505d;
 }
 
 a:hover, a:focus {
     text-decoration: none;
-    color: #11505d;
+    color: #E3E3E3;
 }
 
 .container {
@@ -64,9 +58,36 @@ div#tabContent {
     border: rgba( 227, 227, 227, 0.2 );
 }
 
+.padding-xs {
+    padding: 2px;
+}
+
+.unround {
+    border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
+}
+
+img.profile-picture {
+    width: 100px;
+}
+
+img#active-picture {
+    width: 35px;
+    opacity: 0.6;
+}
+
+img#active-picture:hover {
+    opacity: 0.95;
+}
+
 div#fineprint {
     color: rgb( 160, 160, 160 );
 }
+
+
+
+
 
 /* Extra Small Devices, Phones */
 @media(max-width: 767px) {
@@ -103,7 +124,7 @@ div#fineprint {
 
 /* Large Devices, Desktops */
 @media(min-width: 1200px) {
-    div {
+    div.full {
         height: 100%;
     }
 
@@ -135,10 +156,6 @@ div#fineprint {
     
     div#tabContent, div#activeUsers {
         overflow-y: scroll;
-    }
-
-    div#fineprint {
-        height: auto;
     }
 }
 

@@ -1,6 +1,7 @@
 CREATE TABLE `user` (
    `id` varchar(255) not null,
    `name` varchar(255),
+   `email` varchar(255),
    `rating` varchar(255),
    `last_login` varchar(255),
    `last_updated` timestamp default current_timestamp on update current_timestamp,
