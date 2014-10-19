@@ -41,7 +41,7 @@
                                 </ul>
                             </div>
                             <div class="col-lg-10">
-                                <div id="tabContent" ng-show="selectedTab=='active'">
+                                <div id="tabContent">
                                     activeTradesTable<br>
                                     activeTradesTable<br>
                                     activeTradesTable<br>
@@ -118,10 +118,10 @@
                                     activeTradesTable<br>
                                     activeTradesTable<br>
                                 </div>
-                                <div id="tabContent" ng-show="selectedTab=='history'">
+                                <div id="tabContent">
                                     history table
                                 </div>
-                                <div id="tabContent" ng-show="selectedTab=='open'">
+                                <div id="tabContent">
                                     mess around with new trades
                                 </div>
                             </div>
