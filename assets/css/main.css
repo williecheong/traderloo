@@ -27,7 +27,7 @@ a {
 
 a:hover, a:focus {
     text-decoration: none;
-    color: #E3E3E3;
+    color: rgb(210, 210, 210);
 }
 
 .container {
@@ -47,9 +47,20 @@ div#tabs ul {
     margin: 0em 0px;
 }
 
+.nav-pills li a:hover, 
+.nav-pills li a:focus {
+    background-color: rgb(116, 189, 252);
+    color: rgb(80, 80, 80);
+}
+
 div#tabContent {
     padding-left: 10px;
     padding-right: 10px;
+}
+
+.table thead tr th,
+.table tbody tr td {
+    border-bottom: 2px solid rgb(120, 120, 120);
 }
 
 .well {
@@ -79,6 +90,11 @@ img#active-picture {
 
 img#active-picture:hover {
     opacity: 0.95;
+}
+
+fieldset {
+    margin-right: 8%;
+    display: inline-block;
 }
 
 div#fineprint {

@@ -54,6 +54,8 @@
                                                 <th>Stock</th>
                                                 <th>Shares</th>
                                                 <th>Opening</th>
+                                                <th>Original cost</th>
+                                                <th>Current value</th>
                                                 <th>Net profit</th>
                                                 <th>Action</th>
                                             </tr>
@@ -74,10 +76,16 @@
                                                     {{ ''+trade.opened_datetime+'000' | date:'MMM-dd' }}
                                                     @ {{ trade.opened_price | currency }}
                                                 </td>
+                                                <td ng-bind="(trade.opened_price*trade.shares) | currency"></td>
+                                                <td>
+                                                    <div ng-bind="(trade.currentValue*trade.shares) | currency" ng-if="trade.hasOwnProperty('currentValue')"></div>
+                                                    <div ng-if="!trade.hasOwnProperty('currentValue')">
+                                                        <i class="fa fa-gear fa-spin"></i> Retrieving
+                                                    </div>
+                                                </td>
                                                 <td>
                                                     <div ng-if="trade.hasOwnProperty('profit')">
-                                                        <strong class="text-success" ng-if="trade.profit>0" ng-bind="trade.profit | currency"></strong>
-                                                        <strong class="text-danger" ng-if="trade.profit<=0" ng-bind="trade.profit*-1 | currency"></strong>
+                                                        <strong ng-class="{'text-success':trade.profit>0,'text-danger':trade.profit<=0}" ng-bind="trade.profit | currency"></strong>
                                                     </div>
                                                     <div ng-if="!trade.hasOwnProperty('profit')">
                                                         <i class="fa fa-gear fa-spin"></i> Calculating
@@ -158,7 +166,68 @@
                                     </div>
                                 </div>
                                 <div class="full" id="tabContent" ng-show="selectedTab=='open'">
-                                    mess around with new trades
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <form>
+                                                <div class="form-group">
+                                                    <label for="symbol">
+                                                        Stock symbol:
+                                                    </label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" id="symbol" placeholder="e.g. AAPL" ng-model="inputSymbol" ng-disabled="loading">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-primary" ng-click="findStock(inputSymbol)" ng-disabled="loading">
+                                                                <i class="fa fa-search"></i>
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-4" ng-show="showStock">
+                                            <form>
+                                                <div class="form-group">
+                                                    <label for="shares">
+                                                        Quantity of shares:
+                                                    </label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" id="shares" placeholder="e.g. 9001" ng-model="quantityToPurchase" ng-disabled="loading" valid-number>
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-success" ng-click="openTrade(selectedStock.symbol, quantityToPurchase)" ng-disabled="loading">
+                                                                <i class="fa fa-fax"></i>
+                                                                Open
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div ng-show="showStock">
+                                        <fieldset>
+                                            <strong>Name:</strong>
+                                            <a href="//www.google.com/finance?q={{selectedStock.symbol|uppercase}}" target="_blank">
+                                                <span class="lead" ng-bind="selectedStock.Name"></span>
+                                                <i class="fa fa-external-link"></i>
+                                            </a>
+                                        </fieldset>
+                                        <fieldset>
+                                            <strong>Price:</strong>
+                                            <span class="lead" ng-bind="selectedStock.LastTradePriceOnly | currency"></span>
+                                        </fieldset>
+                                        <fieldset>
+                                            <strong>Book value:</strong>
+                                            <span class="lead" ng-bind="selectedStock.BookValue | currency"></span>
+                                        </fieldset>
+                                        <fieldset>
+                                            <strong>Day range:</strong>
+                                            <span class="lead" ng-bind="selectedStock.DaysRange"></span>
+                                        </fieldset>
+                                        <fieldset>
+                                            <strong>Percent change:</strong>
+                                            <span class="lead" ng-bind="selectedStock.Change_PercentChange"></span>
+                                        </fieldset>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -170,7 +239,7 @@
                             <div class="col-lg-12 full">
                                 <div class="full" id="activeUsers">
                                     <div class="padding-xs" ng-repeat="user in activeUsers">
-                                        <img class="img-rounded" id="active-picture" src="{{ user.id | facebookImage }}" tooltip-html-unsafe="<i class='fa fa-circle text-success'></i> {{user.name}}">
+                                        <img class="img-rounded" id="active-picture" ng-src="{{ user.id || '4' | facebookImage }}" tooltip-html-unsafe="<i class='fa fa-circle text-success'></i> {{user.name}}">
                                     </div>
                                     <div class="padding-xs">
                                         <a class="btn btn-danger btn-sm" href="<?=$this->facebook_url?>">

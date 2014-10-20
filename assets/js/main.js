@@ -3,25 +3,36 @@ var app = angular.module('myApp', ['ui.bootstrap']);
 app.controller('myController', function( $scope, $sce, $http, $filter ) {
 	$scope.selectedTab = 'active';
 
-    $scope.openTrade = function() {
-        $http({
-            'method': 'POST',
-            'url': '/trades',
-            'data': {
-                'symbol' : $scope.selectedStockSymbol,
-                'quantity' : $scope.quantityToPurchase
+    $scope.openTrade = function(symbol, quantity) {
+        if ( quantity && quantity > 0) {
+            var r = confirm("Buy "+quantity+" units of "+symbol.toUpperCase()+"?");
+            if ( r == true ) {
+                $scope.loading = true;
+                $http({
+                    'method': 'POST',
+                    'url': '/trades',
+                    'data': {
+                        'symbol' : symbol,
+                        'quantity' : quantity
+                    }
+                }).success(function(data, status, headers, config) {
+                    $scope.loading = false;
+                    $scope.executeLoad(true);
+                }).error(function(data, status, headers, config) {
+                    $scope.loading = false;
+                });
+            } else {
+                return;
             }
-        }).success(function(data, status, headers, config) {
-            $scope.executeLoad();
-        }).error(function(data, status, headers, config) {
-            // called asynchronously if an error occurs
-            // or server returns response with an error status.
-        });
+        } else {
+            return;
+        }
     };
 
     $scope.closeTrade = function(trade) {
         var r = confirm("Sell "+trade.shares+" units of "+trade.stock.toUpperCase()+"?");
         if ( r == true ) {
+            $scope.loading = true;
             $http({
                 'method': 'PUT',
                 'url': '/trades',
@@ -29,15 +40,32 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
                     'trade_id' : trade.id
                 }
             }).success(function(data, status, headers, config) {
+                $scope.loading = false;
                 $scope.executeLoad();
             }).error(function(data, status, headers, config) {
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
+                $scope.loading = false;
             });
         } else {
             return;
         }
     };
+
+    $scope.findStock = function(symbol) {
+        $scope.loading = true;
+        $scope.showStock = false;
+        $scope.selectedStock = new Object;
+        $scope.quantityToPurchase = "";
+                
+        $scope.getStock(symbol, function(stock) {
+            if (stock) {
+                $scope.selectedStock = stock;
+                $scope.showStock = true;
+                $scope.loading = false;
+            } else {
+                $scope.loading = false;
+            }
+        });
+    }
 
     $scope.getAccountInformation = function() {
         $http({
@@ -48,7 +76,8 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
             angular.forEach(data.active_trades, function(trade, key){
                 $scope.getStock(trade.stock, function(stock){
                     if ( stock.LastTradePriceOnly ) {
-                         $scope.accountInformation.active_trades[key].profit = ((stock.LastTradePriceOnly-trade.opened_price)*trade.shares);
+                        $scope.accountInformation.active_trades[key].currentValue = stock.LastTradePriceOnly;
+                        $scope.accountInformation.active_trades[key].profit = ((stock.LastTradePriceOnly-trade.opened_price)*trade.shares);
                     } else {
                         return false;
                     }
@@ -124,11 +153,7 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
     }
 
     $scope.switchTab = function(tab) {
-        if ( tab == 'active' ) {
-            $scope.selectedTab = tab;
-        } else if ( tab == 'history' ) {
-            $scope.selectedTab = tab;
-        } else if ( tab == 'open' ) {
+        if ( tab == 'active' || tab == 'history' || tab == 'open' ) {
             $scope.selectedTab = tab;
         } else {
             $scope.switchTab('active');
@@ -140,16 +165,25 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
         $scope.getAccountBalances();
         
         if ( $scope.selectedTab == 'active' ) {
-            $scope.getAccountInformation();
             if ( hardReset ) {
                 delete $scope.accountInformation.active_trades;
             }
+            $scope.getAccountInformation();            
         } 
         
         if ( $scope.selectedTab == 'history' ) {
-            $scope.getTradeHistory();
             if ( hardReset ) {
                 delete $scope.tradeHistory;
+            }
+            $scope.getTradeHistory();
+        }
+
+        if ( $scope.selectedTab == 'open' ) {
+            if ( hardReset ) {
+                $scope.inputSymbol = "";
+                $scope.quantityToPurchase = "";
+                $scope.selectedStock = new Object();
+                $scope.showStock = false;
             }
         }
 
@@ -177,6 +211,30 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
     return function(facebookName) {
         var explodeName = facebookName.split(' ');
         return explodeName[0];
+    };
+}).directive('validNumber', function() {
+    return {
+        require: '?ngModel',
+        link: function(scope, element, attrs, ngModelCtrl) {
+            if(!ngModelCtrl) {
+                return; 
+            }
+
+            ngModelCtrl.$parsers.push(function(val) {
+                var clean = val.replace( /[^0-9]+/g, '');
+                if (val !== clean) {
+                    ngModelCtrl.$setViewValue(clean);
+                    ngModelCtrl.$render();
+                }
+                return clean;
+            });
+
+            element.bind('keypress', function(event) {
+                if(event.keyCode === 32) {
+                    event.preventDefault();
+                }
+            });
+        }
     };
 });
 

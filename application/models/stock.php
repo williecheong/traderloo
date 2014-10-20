@@ -13,7 +13,7 @@ class stock extends CI_Model{
             $response_decoded = json_decode($response); 
             
             if ( isset($response_decoded->query->results->quote->LastTradePriceOnly) ) {
-                if ( $response_decoded->query->results->quote->LastTradePriceOnly ) {
+                if ( $response_decoded->query->results->quote->LastTradePriceOnly > 0 ) {
                     return $response_decoded->query->results->quote;  
                 }
             } 
