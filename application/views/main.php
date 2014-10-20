@@ -36,13 +36,22 @@
                             <div class="col-lg-2 full" id="tabs">
                                 <ul class="nav nav-pills nav-stacked" role="tablist">
                                     <li ng-class="{'active':selectedTab=='active'}" ng-click="switchTab('active')">
-                                        <a href="">Active</a>
+                                        <a href="">
+                                             <i class="fa fa-certificate"></i>
+                                             Active
+                                         </a>
                                     </li>
                                     <li ng-class="{'active':selectedTab=='history'}" ng-click="switchTab('history')">
-                                        <a href="">History</a>
+                                        <a href="">
+                                            <i class="fa fa-archive"></i>
+                                            History
+                                        </a>
                                     </li>
                                     <li ng-class="{'active':selectedTab=='open'}" ng-click="switchTab('open')">
-                                        <a href="">Open</a>
+                                        <a href="">
+                                            <i class="fa fa-fax"></i>
+                                            Open
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
