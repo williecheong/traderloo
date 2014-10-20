@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ui.bootstrap']);
+var app = angular.module('myApp', ['ui.bootstrap', 'ngSanitize']);
 
 app.controller('myController', function( $scope, $sce, $http, $filter ) {
 	$scope.selectedTab = 'active';
@@ -95,7 +95,17 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
             'method': 'GET',
             'url': '/account/balances'
         }).success(function(data, status, headers, config) {
-            $scope.accountBalances = data;
+            var chartData = [];
+            angular.forEach(data, function(balance) {
+                dateParts = balance.last_updated.split("-");
+                chartData.push({
+                    x: new Date(dateParts[0], dateParts[1] - 1, dateParts[2].substr(0, 2), dateParts[2].substr(3, 2), dateParts[2].substr(6, 2), dateParts[2].substr(9, 2)),
+                    y: parseFloat(balance.value)
+                });
+            });
+            console.log(chartData);
+             $scope.chart.options.data[0].dataPoints = chartData;
+            $scope.chart.render();
         }).error(function(data, status, headers, config) {
             // called asynchronously if an error occurs
             // or server returns response with an error status.
@@ -194,6 +204,36 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
 
     // Always initialize
     $scope.executeLoad();
+    $scope.chart = new CanvasJS.Chart("balanceInformation", {
+        animationEnabled : true,
+        backgroundColor : "rgb(230, 230, 230)",
+        creditText : "",
+        content: function(e){
+            var content;
+            content = e.entries[0].dataSeries.name + " <strong>"+e.entries[0].dataPoint.y  ;
+            return content;
+        },
+        title : {
+            text: "Account Balances",
+            labelFontFamily : "inherit",
+            titleFontFamily : "inherit"
+        },
+        axisX : {
+            title: "Timeline",
+            labelFontFamily : "inherit",
+            titleFontFamily : "inherit",
+            gridThickness: 1
+        },
+        axisY : {
+            title: "Balance",
+            labelFontFamily : "inherit",
+            titleFontFamily : "inherit" 
+        },
+        data : [{        
+            type: "area",
+            dataPoints: []
+        }]
+    });
 
 }).filter('facebookImage', function() {
     return function(facebookId) {

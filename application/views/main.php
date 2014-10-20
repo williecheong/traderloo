@@ -23,9 +23,7 @@
             <div class="well well-sm full" id="visualizations">
                 <div class="row full">
                     <div class="col-lg-12 full">
-                        <div class="full" id="balanceInformation">
-                            <pre ng-bind="accountBalances | json"></pre>
-                        </div>
+                        <div class="full" id="balanceInformation"></div>
                     </div>
                 </div>
             </div>
@@ -263,6 +261,8 @@
         </div>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular-sanitize.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/canvasjs/1.4.1/canvas.min.js"></script>
         <script src="/assets/js/main.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
