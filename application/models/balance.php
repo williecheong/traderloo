@@ -49,10 +49,21 @@ class balance extends CI_Model{
         }
     }
 
+    function transform_trades( $balances = array() ) {
+        foreach ($balances as $key => $balance) {
+            if ( $balance->reason == "opened_trade" || $balance->reason == "closed_trade" ) {
+                if ( $balance->reason_detail ) {
+                    $balances[$key]->reason_detail = $this->trade->retrieve_by_id( $balance->reason_detail );                    
+                }
+            }
+        }
+        return $balances;
+    }
+
     function get_all() {
         $this->db->order_by("id", "desc"); 
         $query = $this->db->get('balance');
-        return $query->result();
+        return $this->balance->transform_trades( $query->result() );
     }
 }
 

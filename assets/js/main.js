@@ -41,7 +41,7 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
                 }
             }).success(function(data, status, headers, config) {
                 $scope.loading = false;
-                $scope.executeLoad();
+                $scope.executeLoad(true);
             }).error(function(data, status, headers, config) {
                 $scope.loading = false;
             });
@@ -95,16 +95,19 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
             'method': 'GET',
             'url': '/account/balances'
         }).success(function(data, status, headers, config) {
+            $scope.accountBalances = data;
+
             var chartData = [];
             angular.forEach(data, function(balance) {
                 dateParts = balance.last_updated.split("-");
                 chartData.push({
-                    x: new Date(dateParts[0], dateParts[1] - 1, dateParts[2].substr(0, 2), dateParts[2].substr(3, 2), dateParts[2].substr(6, 2), dateParts[2].substr(9, 2)),
-                    y: parseFloat(balance.value)
+                    label   : $filter('balanceTooltipTemplate')(balance),
+                    x       : new Date(dateParts[0], dateParts[1] - 1, dateParts[2].substr(0, 2), dateParts[2].substr(3, 2), dateParts[2].substr(6, 2), dateParts[2].substr(9, 2)),
+                    y       : parseFloat(balance.value)
                 });
             });
-            console.log(chartData);
-             $scope.chart.options.data[0].dataPoints = chartData;
+            $scope.chart.options.data[0].dataPoints = chartData;
+            $scope.chart.options.backgroundColor = "rgb(230, 230, 230)";
             $scope.chart.render();
         }).error(function(data, status, headers, config) {
             // called asynchronously if an error occurs
@@ -206,7 +209,7 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
     $scope.executeLoad();
     $scope.chart = new CanvasJS.Chart("balanceInformation", {
         animationEnabled : true,
-        backgroundColor : "rgb(230, 230, 230)",
+        backgroundColor : "transparent",
         creditText : "",
         content: function(e){
             var content;
@@ -218,6 +221,11 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
             labelFontFamily : "inherit",
             titleFontFamily : "inherit"
         },
+        toolTip : {
+            content : function(e) {
+                return e.entries[0].dataPoint.label;
+            }
+        },
         axisX : {
             title: "Timeline",
             labelFontFamily : "inherit",
@@ -226,11 +234,12 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
         },
         axisY : {
             title: "Balance",
+            labelAngle: 315,
             labelFontFamily : "inherit",
             titleFontFamily : "inherit" 
         },
         data : [{        
-            type: "area",
+            type: "line",
             dataPoints: []
         }]
     });
@@ -251,6 +260,56 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
     return function(facebookName) {
         var explodeName = facebookName.split(' ');
         return explodeName[0];
+    };
+}).filter('balanceTooltipTemplate', function($filter) {
+    return function(balance) {
+        var html = "";
+        if (balance.reason == 'opened_trade') {
+            html += "Bought: ";
+            html += "<strong>" + balance.reason_detail.stock.toUpperCase() + "</strong>";
+            html += "<br>";
+
+            html += "Shares: ";
+            html += "<strong>" + parseFloat(balance.reason_detail.shares) + " units</strong>";
+            html += "<br>"; 
+
+            html += "Net cost: ";
+            html += "<strong>" + $filter('currency')(balance.reason_detail.shares*balance.reason_detail.opened_price) + "</strong>";
+            html += "<br>"; 
+            
+            html += "Trader: ";
+            html += "<strong>" + balance.reason_detail.opened_user.name + "</strong>";
+            html += "<br>"; 
+            
+        } else if (balance.reason == 'closed_trade') {
+            html += "Sold: ";
+            html += "<strong>" + balance.reason_detail.stock.toUpperCase() + "</strong>";
+            html += "<br>";
+
+            html += "Shares: ";
+            html += "<strong>" + parseFloat(balance.reason_detail.shares) + " units</strong>";
+            html += "<br>"; 
+
+            html += "Net gain: ";
+            html += "<strong>" + $filter('currency')(balance.reason_detail.shares*balance.reason_detail.closed_price) + "</strong>";
+            html += "<br>"; 
+            
+            html += "Net profit: ";
+            html += "<strong>" + $filter('currency')(balance.reason_detail.shares*(balance.reason_detail.closed_price-balance.reason_detail.opened_price)) + "</strong>";
+            html += "<br>"; 
+
+            html += "Trader: ";
+            html += "<strong>" + balance.reason_detail.opened_user.name + "</strong>";
+            html += "<br>"; 
+        } else if (balance.reason == 'initial_deposit') {
+            html += "Initial Deposit: ";
+            html += "<strong>" + $filter('currency')(balance.value) + "</strong>";
+            html += "<br>";
+        }
+        html += "Date: ";
+        html += "<strong>" + $filter('date')(new Date(balance.last_updated.replace(' ', 'T')).getTime(), 'MMM d, yy @ h:mm a') + "</strong>";
+        
+        return html;
     };
 }).directive('validNumber', function() {
     return {
@@ -277,4 +336,3 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
         }
     };
 });
-

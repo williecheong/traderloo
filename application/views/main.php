@@ -4,7 +4,7 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html ng-app="myApp" ng-controller="myController"> <!--<![endif]-->
     <head>
-        <title ng-bind-template="<?=APP_NAME?> :: {{ accountInformation.current_balance || 0 | currency }}"></title>
+        <title ng-bind-template="<?=APP_NAME?> :: {{ accountBalances[0].value || 0 | currency }}"></title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="description" content="<?=APP_DESCRIPTION?>">
@@ -23,7 +23,12 @@
             <div class="well well-sm full" id="visualizations">
                 <div class="row full">
                     <div class="col-lg-12 full">
-                        <div class="full" id="balanceInformation"></div>
+                        <div class="text-center lead full" ng-if="!accountBalances">
+                            <i class="fa fa-gear fa-spin"></i> LOADING
+                        </div>
+                        <div class="full" id="balanceInformation">
+                            
+                        </div>
                     </div>
                 </div>
             </div>
@@ -99,7 +104,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <button class="btn btn-warning btn-xs" ng-click="closeTrade(trade)">
+                                                    <button class="btn btn-warning btn-xs" ng-click="closeTrade(trade)" ng-disabled="loading">
                                                         <i class="fa fa-legal"></i> Sell
                                                     </button>
                                                 </td>
@@ -237,8 +242,8 @@
                         <div class="row full">
                             <div class="col-lg-12 full">
                                 <div class="full" id="activeUsers">
-                                    <div class="padding-xs" ng-repeat="user in activeUsers">
-                                        <img class="img-rounded" id="active-picture" ng-src="{{ user.id || '4' | facebookImage }}" tooltip-html-unsafe="<i class='fa fa-circle text-success'></i> {{user.name}}">
+                                    <div>
+                                        <img class="img-rounded padding-xs" id="active-picture" ng-repeat="user in activeUsers" ng-src="{{ user.id || '4' | facebookImage }}" tooltip-html-unsafe="<i class='fa fa-circle text-success'></i> {{user.name}}">
                                     </div>
                                     <div class="padding-xs">
                                         <a class="btn btn-danger btn-sm" href="<?=$this->facebook_url?>">
