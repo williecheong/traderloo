@@ -167,41 +167,33 @@
                                 </div>
                                 <div class="full" id="tabContent" ng-show="selectedTab=='open'">
                                     <div class="row">
-                                        <div class="col-lg-4">
-                                            <form>
-                                                <div class="form-group">
-                                                    <label for="symbol">
-                                                        Stock symbol:
-                                                    </label>
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" id="symbol" placeholder="e.g. AAPL" ng-model="inputSymbol" ng-disabled="loading">
-                                                        <span class="input-group-btn">
-                                                            <button class="btn btn-primary" ng-click="findStock(inputSymbol)" ng-disabled="loading">
-                                                                <i class="fa fa-search"></i>
-                                                            </button>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="col-lg-4" ng-show="showStock">
-                                            <form>
-                                                <div class="form-group">
-                                                    <label for="shares">
-                                                        Quantity of shares:
-                                                    </label>
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" id="shares" placeholder="e.g. 9001" ng-model="quantityToPurchase" ng-disabled="loading" valid-number>
-                                                        <span class="input-group-btn">
-                                                            <button class="btn btn-success" ng-click="openTrade(selectedStock.symbol, quantityToPurchase)" ng-disabled="loading">
-                                                                <i class="fa fa-fax"></i>
-                                                                Open
-                                                            </button>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
+                                        <form class="col-lg-4">
+                                            <label for="symbol">
+                                                Stock symbol:
+                                            </label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="symbol" placeholder="e.g. AAPL" ng-model="inputSymbol" ng-disabled="loading">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-primary" ng-click="findStock(inputSymbol)" ng-disabled="loading">
+                                                        <i class="fa fa-search"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </form>
+                                        <form class="col-lg-4" ng-show="showStock">
+                                            <label for="shares">
+                                                Quantity of shares:
+                                            </label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="shares" placeholder="e.g. 9001" ng-model="quantityToPurchase" ng-disabled="loading" valid-number>
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-success" ng-click="openTrade(selectedStock.symbol, quantityToPurchase)" ng-disabled="loading">
+                                                        <i class="fa fa-fax"></i>
+                                                        Open
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </form>
                                     </div>
                                     <div ng-show="showStock">
                                         <fieldset>

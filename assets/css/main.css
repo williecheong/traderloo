@@ -58,6 +58,10 @@ div#tabContent {
     padding-right: 10px;
 }
 
+div#tabContent div.row {
+    width: 95%;
+}
+
 .table thead tr th,
 .table tbody tr td {
     border-bottom: 2px solid rgb(120, 120, 120);
