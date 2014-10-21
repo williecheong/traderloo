@@ -1,6 +1,6 @@
-var app = angular.module('myApp', ['ui.bootstrap', 'ngSanitize']);
+var app = angular.module('myApp', ['ui.bootstrap', 'ngSanitize', 'toaster']);
 
-app.controller('myController', function( $scope, $sce, $http, $filter ) {
+app.controller('myController', function( $scope, $sce, $http, $filter, toaster ) {
 	$scope.selectedTab = 'active';
 
     $scope.openTrade = function(symbol, quantity) {
@@ -20,6 +20,7 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
                     $scope.switchTab('active');
                 }).error(function(data, status, headers, config) {
                     $scope.loadingOpenTrade = false;
+                    toaster.pop('error', 'Error: ' + status, data.message);
                 });
             } else {
                 return;
@@ -44,6 +45,7 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
                 $scope.executeLoad(true);
             }).error(function(data, status, headers, config) {
                 $scope.loadingCloseTrade = false;
+                toaster.pop('error', 'Error: ' + status, data.message);
             });
         } else {
             return;
@@ -74,6 +76,7 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
             'url': '/account'
         }).success(function(data, status, headers, config) {
             $scope.accountInformation = data;
+            
             angular.forEach(data.active_trades, function(trade, key){
                 $scope.getStock(trade.stock, function(stock){
                     if ( stock.LastTradePriceOnly ) {
@@ -84,11 +87,12 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
                     }
                 });
             });
+            
             $scope.loadingAccountInformation = false;
+
         }).error(function(data, status, headers, config) {
-            // called asynchronously if an error occurs
-            // or server returns response with an error status.
             $scope.loadingAccountInformation = false;
+            toaster.pop('error', 'Error: ' + status, data.message);
         });
     };
     
@@ -114,9 +118,8 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
             $scope.chart.render();
             $scope.loadingAccountBalances = false;
         }).error(function(data, status, headers, config) {
-            // called asynchronously if an error occurs
-            // or server returns response with an error status.
             $scope.loadingAccountBalances = false;
+            toaster.pop('error', 'Error: ' + status, data.message);
         });
     };
 
@@ -132,9 +135,8 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
             $scope.tradeHistory = data;
             $scope.loadingTradeHistory = false;
         }).error(function(data, status, headers, config) {
-            // called asynchronously if an error occurs
-            // or server returns response with an error status.
             $scope.loadingTradeHistory = false;
+            toaster.pop('error', 'Error: ' + status, data.message);
         });
     };
 
@@ -145,8 +147,7 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
         }).success(function(data, status, headers, config) {
             $scope.activeUsers = data;
         }).error(function(data, status, headers, config) {
-            // called asynchronously if an error occurs
-            // or server returns response with an error status.
+            toaster.pop('error', 'Error: ' + status, data.message);
         });
     };
 
@@ -167,6 +168,7 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
         }).success(function(data, status, headers, config) {
             callback(data);
         }).error(function(data, status, headers, config) {
+            toaster.pop('error', 'Error: ' + status, data.message);
             callback(false);
         });
     };

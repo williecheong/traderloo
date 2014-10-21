@@ -13,6 +13,7 @@
         <link rel="shortcut icon" href="/assets/img/<?=ENVIRONMENT?>.ico" type="image/x-icon">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/assets/css/toaster.css">
         <link rel="stylesheet" href="/assets/css/main.css">
     </head>
     <body>
@@ -20,6 +21,7 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <div class="container full">
+            <toaster-container toaster-options="{'time-out': 3000}"></toaster-container>
             <div class="well well-sm full" id="visualizations">
                 <div class="row full">
                     <div class="col-lg-12 full">
@@ -287,7 +289,8 @@
                                     </div>
                                     <div class="padding-xs">
                                         <a class="btn btn-danger btn-sm" href="<?=$this->facebook_url?>">
-                                            <i class="fa fa-sign-out"></i> <?=$this->session->userdata('name')?>
+                                            <i class="fa fa-sign-out"></i> 
+                                            <span ng-bind="'<?=$this->session->userdata('name')?>' | firstName"></span>
                                         </a>
                                     </div>
                                 </div>
@@ -306,8 +309,10 @@
         </div>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-animate.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular-sanitize.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/canvasjs/1.4.1/canvas.min.js"></script>
+        <script src="/assets/js/vendor/toaster.js"></script>
         <script src="/assets/js/main.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
