@@ -7,7 +7,7 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
         if ( quantity && quantity > 0) {
             var r = confirm("Buy "+quantity+" units of "+symbol.toUpperCase()+"?");
             if ( r == true ) {
-                $scope.loading = true;
+                $scope.loadingOpenTrade = true;
                 $http({
                     'method': 'POST',
                     'url': '/trades',
@@ -16,10 +16,10 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
                         'quantity' : quantity
                     }
                 }).success(function(data, status, headers, config) {
-                    $scope.loading = false;
+                    $scope.loadingOpenTrade = false;
                     $scope.executeLoad(true);
                 }).error(function(data, status, headers, config) {
-                    $scope.loading = false;
+                    $scope.loadingOpenTrade = false;
                 });
             } else {
                 return;
@@ -32,7 +32,7 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
     $scope.closeTrade = function(trade) {
         var r = confirm("Sell "+trade.shares+" units of "+trade.stock.toUpperCase()+"?");
         if ( r == true ) {
-            $scope.loading = true;
+            $scope.loadingCloseTrade = true;
             $http({
                 'method': 'PUT',
                 'url': '/trades',
@@ -40,10 +40,10 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
                     'trade_id' : trade.id
                 }
             }).success(function(data, status, headers, config) {
-                $scope.loading = false;
+                $scope.loadingCloseTrade = false;
                 $scope.executeLoad(true);
             }).error(function(data, status, headers, config) {
-                $scope.loading = false;
+                $scope.loadingCloseTrade = false;
             });
         } else {
             return;
@@ -51,7 +51,7 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
     };
 
     $scope.findStock = function(symbol) {
-        $scope.loading = true;
+        $scope.loadingFindStock = true;
         $scope.showStock = false;
         $scope.selectedStock = new Object;
         $scope.quantityToPurchase = "";
@@ -60,14 +60,15 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
             if (stock) {
                 $scope.selectedStock = stock;
                 $scope.showStock = true;
-                $scope.loading = false;
+                $scope.loadingFindStock = false;
             } else {
-                $scope.loading = false;
+                $scope.loadingFindStock = false;
             }
         });
     }
 
     $scope.getAccountInformation = function() {
+        $scope.loadingAccountInformation = true;
         $http({
             'method': 'GET',
             'url': '/account'
@@ -83,14 +84,16 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
                     }
                 });
             });
-
+            $scope.loadingAccountInformation = false;
         }).error(function(data, status, headers, config) {
             // called asynchronously if an error occurs
             // or server returns response with an error status.
+            $scope.loadingAccountInformation = false;
         });
     };
     
     $scope.getAccountBalances = function() {
+        $scope.loadingAccountBalances = true;
         $http({
             'method': 'GET',
             'url': '/account/balances'
@@ -109,13 +112,16 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
             $scope.chart.options.data[0].dataPoints = chartData;
             $scope.chart.options.backgroundColor = "rgb(230, 230, 230)";
             $scope.chart.render();
+            $scope.loadingAccountBalances = false;
         }).error(function(data, status, headers, config) {
             // called asynchronously if an error occurs
             // or server returns response with an error status.
+            $scope.loadingAccountBalances = false;
         });
     };
 
     $scope.getTradeHistory = function() {
+        $scope.loadingTradeHistory = true;
         $http({
             'method': 'GET',
             'url': '/trades/history'
@@ -123,12 +129,12 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
             angular.forEach(data, function(trade, key){
                 data[key].profit = ((trade.closed_price-trade.opened_price)*trade.shares);
             });
-
             $scope.tradeHistory = data;
-            
+            $scope.loadingTradeHistory = false;
         }).error(function(data, status, headers, config) {
             // called asynchronously if an error occurs
             // or server returns response with an error status.
+            $scope.loadingTradeHistory = false;
         });
     };
 
@@ -208,6 +214,7 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
     // Always initialize
     $scope.executeLoad();
     $scope.chart = new CanvasJS.Chart("balanceInformation", {
+        zoomEnabled : true,
         animationEnabled : true,
         backgroundColor : "transparent",
         creditText : "",

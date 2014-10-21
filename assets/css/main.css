@@ -43,6 +43,10 @@ pre {
     background-color: transparent;
 }
 
+div#balanceInformation {
+    height: 350px;
+}
+
 div#tabs ul {
     margin: 0em 0px;
 }
@@ -163,7 +167,7 @@ div#fineprint {
     }
 
     div#balanceInformation {
-        overflow-y: scroll;
+        height: 100%;
     }
 
     div#interactions {

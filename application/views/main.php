@@ -37,7 +37,7 @@
                     <div class="well well-sm full">
                         <div class="row full">
                             <div class="col-lg-2 full" id="tabs">
-                                <ul class="nav nav-pills nav-stacked" role="tablist">
+                                <ul class="nav nav-pills nav-stacked visible-lg" role="tablist">
                                     <li ng-class="{'active':selectedTab=='active'}" ng-click="switchTab('active')">
                                         <a href="">
                                              <i class="fa fa-certificate"></i>
@@ -54,6 +54,46 @@
                                         <a href="">
                                             <i class="fa fa-fax"></i>
                                             Open
+                                        </a>
+                                    </li>
+                                    <li ng-click="executeLoad()" ng-class="{'disabled':loadingOpenTrade||loadingCloseTrade||loadingFindStock||loadingAccountInformation||loadingAccountBalances||loadingTradeHistory}">
+                                        <a href="">
+                                            <span  ng-if="!(loadingOpenTrade||loadingCloseTrade||loadingFindStock||loadingAccountInformation||loadingAccountBalances||loadingTradeHistory)">
+                                                <i class="fa fa-refresh"></i> Refresh
+                                            </span>
+                                            <span  ng-if="loadingOpenTrade||loadingCloseTrade||loadingFindStock||loadingAccountInformation||loadingAccountBalances||loadingTradeHistory">
+                                                <i class="fa fa-gear fa-spin"></i> Loading
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-pills nav-justified hidden-lg" role="tablist">
+                                    <li ng-class="{'active':selectedTab=='active'}" ng-click="switchTab('active')">
+                                        <a href="">
+                                             <i class="fa fa-certificate"></i>
+                                             Active
+                                         </a>
+                                    </li>
+                                    <li ng-class="{'active':selectedTab=='history'}" ng-click="switchTab('history')">
+                                        <a href="">
+                                            <i class="fa fa-archive"></i>
+                                            History
+                                        </a>
+                                    </li>
+                                    <li ng-class="{'active':selectedTab=='open'}" ng-click="switchTab('open')">
+                                        <a href="">
+                                            <i class="fa fa-fax"></i>
+                                            Open
+                                        </a>
+                                    </li>
+                                    <li ng-click="executeLoad()" ng-class="{'disabled':loadingOpenTrade||loadingCloseTrade||loadingFindStock||loadingAccountInformation||loadingAccountBalances||loadingTradeHistory}">
+                                        <a href="">
+                                            <span  ng-if="!(loadingOpenTrade||loadingCloseTrade||loadingFindStock||loadingAccountInformation||loadingAccountBalances||loadingTradeHistory)">
+                                                <i class="fa fa-refresh"></i> Refresh
+                                            </span>
+                                            <span  ng-if="loadingOpenTrade||loadingCloseTrade||loadingFindStock||loadingAccountInformation||loadingAccountBalances||loadingTradeHistory">
+                                                <i class="fa fa-gear fa-spin"></i> Loading
+                                            </span>
                                         </a>
                                     </li>
                                 </ul>
@@ -104,7 +144,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <button class="btn btn-warning btn-xs" ng-click="closeTrade(trade)" ng-disabled="loading">
+                                                    <button class="btn btn-warning btn-xs" ng-click="closeTrade(trade)" ng-disabled="loadingCloseTrade">
                                                         <i class="fa fa-legal"></i> Sell
                                                     </button>
                                                 </td>
@@ -184,9 +224,9 @@
                                                 Stock symbol:
                                             </label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" id="symbol" placeholder="e.g. AAPL" ng-model="inputSymbol" ng-disabled="loading">
+                                                <input type="text" class="form-control" id="symbol" placeholder="e.g. AAPL" ng-model="inputSymbol" ng-disabled="loadingFindStock">
                                                 <span class="input-group-btn">
-                                                    <button class="btn btn-primary" ng-click="findStock(inputSymbol)" ng-disabled="loading">
+                                                    <button class="btn btn-primary" ng-click="findStock(inputSymbol)" ng-disabled="loadingFindStock">
                                                         <i class="fa fa-search"></i>
                                                     </button>
                                                 </span>
@@ -197,9 +237,9 @@
                                                 Quantity of shares:
                                             </label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" id="shares" placeholder="e.g. 9001" ng-model="quantityToPurchase" ng-disabled="loading" valid-number>
+                                                <input type="text" class="form-control" id="shares" placeholder="e.g. 9001" ng-model="quantityToPurchase" ng-disabled="loadingOpenTrade" valid-number>
                                                 <span class="input-group-btn">
-                                                    <button class="btn btn-success" ng-click="openTrade(selectedStock.symbol, quantityToPurchase)" ng-disabled="loading">
+                                                    <button class="btn btn-success" ng-click="openTrade(selectedStock.symbol, quantityToPurchase)" ng-disabled="loadingOpenTrade">
                                                         <i class="fa fa-fax"></i>
                                                         Open
                                                     </button>
