@@ -215,20 +215,25 @@ app.controller('myController', function( $scope, $sce, $http, $filter, toaster )
 
     // Always initialize
     $scope.executeLoad();
+    CanvasJS.addCultureInfo('default', {
+        panText : '<i class="fa fa-arrows"></i> Drag',
+        zoomText : '<i class="fa fa-search-plus"></i> Zoom',
+        resetText : '<i class="fa fa-refresh"></i> Reset'
+    });
+
     $scope.chart = new CanvasJS.Chart("balanceInformation", {
         zoomEnabled : true,
+        culture : 'default',
         animationEnabled : true,
-        backgroundColor : "transparent",
-        creditText : "",
+        backgroundColor : 'transparent',
+        creditText : '',
         content: function(e){
             var content;
             content = e.entries[0].dataSeries.name + " <strong>"+e.entries[0].dataPoint.y  ;
             return content;
         },
         title : {
-            text: "Account Balances",
-            labelFontFamily : "inherit",
-            titleFontFamily : "inherit"
+            text: "Account Balances"
         },
         toolTip : {
             content : function(e) {
