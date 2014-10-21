@@ -18,7 +18,17 @@ class trade extends CI_Model{
                 (float)$stock->LastTradePriceOnly * (float)$quantity,
                 "opened_trade", $trade_id 
             );
-            return $this->trade->retrieve_by_id( $trade_id );
+
+            if ( $new_balance != false ) {
+                return $this->trade->retrieve_by_id( $trade_id );
+            } else {
+                $this->trade->delete(
+                    array(
+                        'id' => $trade_id
+                    )
+                );
+                return "insufficient_funds";
+            }
         } catch ( Exception $e ) {
             return false;
         }

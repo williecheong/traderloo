@@ -4,12 +4,16 @@ class balance extends CI_Model{
     
     function debit( $amount = 0, $reason = "", $reason_detail = "" ) {
         $current_balance = $this->balance->get_current();
-        $new_balance = $this->balance->insert(
-            (float)$current_balance - (float)$amount,
-            $reason, $reason_detail
-        );
-
-        return $new_balance;    
+        
+        if ( (float)$current_balance >= (float)$amount ) {
+            $new_balance = $this->balance->insert(
+                (float)$current_balance - (float)$amount,
+                $reason, $reason_detail
+            );
+            return $new_balance;    
+        } else {
+            return false;
+        }
     }
 
     function credit( $amount = 0, $reason = "", $reason_detail = "" ) {

@@ -17,7 +17,7 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
                     }
                 }).success(function(data, status, headers, config) {
                     $scope.loadingOpenTrade = false;
-                    $scope.executeLoad(true);
+                    $scope.switchTab('active');
                 }).error(function(data, status, headers, config) {
                     $scope.loadingOpenTrade = false;
                 });
@@ -65,7 +65,7 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
                 $scope.loadingFindStock = false;
             }
         });
-    }
+    };
 
     $scope.getAccountInformation = function() {
         $scope.loadingAccountInformation = true;
@@ -169,7 +169,7 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
         }).error(function(data, status, headers, config) {
             callback(false);
         });
-    }
+    };
 
     $scope.switchTab = function(tab) {
         if ( tab == 'active' || tab == 'history' || tab == 'open' ) {
@@ -178,7 +178,7 @@ app.controller('myController', function( $scope, $sce, $http, $filter ) {
             $scope.switchTab('active');
         }
         $scope.executeLoad(true);
-    }
+    };
 
     $scope.executeLoad = function(hardReset) {
         $scope.getAccountBalances();

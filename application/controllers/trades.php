@@ -36,10 +36,16 @@ class Trades extends API_Controller {
             $stock = $this->stock->retrieve($symbol);
             if ( $stock ) {
                 $trade = $this->trade->open($stock, $quantity);
-                if ( $trade ) {
-                    http_response_code("201");
-                    header('Content-Type: application/json');
-                    echo json_encode($trade);   
+                if ( $trade ) {    
+                    if ( isset($trade->id) ) {
+                        http_response_code("201");
+                        header('Content-Type: application/json');
+                        echo json_encode($trade);
+                    } else { // if ( $trade == 'insufficient_funds' ) {
+                        http_response_code("424");
+                        header('Content-Type: application/json');
+                        echo $this->message("Insufficient funds in account");
+                    }
                 } else {
                     http_response_code("417");
                     header('Content-Type: application/json');
