@@ -73,7 +73,7 @@ class user extends CI_Model{
 
     function create( $data = array() ){
         $this->db->insert('user', $data);    
-        return $this->db->insert_id();
+        return $data['id'];
     }
 
     function retrieve( $data = array() ){
