@@ -33,29 +33,35 @@ class Trades extends API_Controller {
         $symbol = $this->post('symbol');
         $quantity = $this->post('quantity');
         if ( $symbol && $quantity ) {
-            $stock = $this->stock->retrieve($symbol);
-            if ( $stock ) {
-                $trade = $this->trade->open($stock, $quantity);
-                if ( $trade ) {    
-                    if ( isset($trade->id) ) {
-                        http_response_code("201");
+            if ( is_numeric($quantity) && $quantity > 0 ) {
+                $stock = $this->stock->retrieve($symbol);
+                if ( $stock ) {
+                    $trade = $this->trade->open($stock, $quantity);
+                    if ( $trade ) {    
+                        if ( isset($trade->id) ) {
+                            http_response_code("201");
+                            header('Content-Type: application/json');
+                            echo json_encode($trade);
+                        } else { // if ( $trade == 'insufficient_funds' ) {
+                            http_response_code("424");
+                            header('Content-Type: application/json');
+                            echo $this->message("Insufficient funds in account");
+                        }
+                    } else {
+                        http_response_code("417");
                         header('Content-Type: application/json');
-                        echo json_encode($trade);
-                    } else { // if ( $trade == 'insufficient_funds' ) {
-                        http_response_code("424");
-                        header('Content-Type: application/json');
-                        echo $this->message("Insufficient funds in account");
+                        echo $this->message("Unexpected error occurred: 58mh8");
                     }
                 } else {
-                    http_response_code("417");
+                    http_response_code("404");
                     header('Content-Type: application/json');
-                    echo $this->message("Unexpected error occurred: 58mh8");
+                    echo $this->message("Stock not found");            
                 }
             } else {
-                http_response_code("404");
+                http_response_code("406");
                 header('Content-Type: application/json');
-                echo $this->message("Stock not found");            
-            }    
+                echo $this->message("Invalid quantity of shares");  
+            }
         } else {
             http_response_code("400");
             header('Content-Type: application/json');
