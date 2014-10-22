@@ -32,7 +32,7 @@ class Trades extends API_Controller {
     public function index_post() {
         $symbol = $this->post('symbol');
         $quantity = $this->post('quantity');
-        if ( $symbol && $quantity ) {
+        if ( $symbol ) {
             if ( is_numeric($quantity) && $quantity > 0 ) {
                 $stock = $this->stock->retrieve($symbol);
                 if ( $stock ) {
