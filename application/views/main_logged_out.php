@@ -27,7 +27,7 @@
                         <h1 class="brand-heading"><?=APP_NAME?></h1>
                         <p class="intro-text">
                             One account 
-                            <i class="fa fa-times-circle" tooltip-html-unsafe="{{ tooltipContent() }}" tooltip-trigger="click" ng-class="{'fa-spin': xClick, 'text-warning': xClick}" ng-click="xClick=!xClick"></i> 
+                            <i class="fa fa-times-circle" style="cursor:pointer;" tooltip-html-unsafe="{{ tooltipContent() }}" tooltip-trigger="click" ng-class="{'fa-spin': xClick, 'text-warning': xClick}" ng-click="xClick=!xClick"></i> 
                             Many traders
                             <br>
                             <small>
