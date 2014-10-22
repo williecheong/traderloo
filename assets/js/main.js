@@ -1,12 +1,21 @@
-var app = angular.module('myApp', ['ui.bootstrap', 'ngSanitize', 'toaster']);
-
+var app = angular.module('myApp', ['ui.bootstrap', 'ngSanitize', 'ngResize', 'toaster']);
+//app.service('swal', sweetAlertService);
 app.controller('myController', function( $scope, $sce, $http, $filter, toaster ) {
 	$scope.selectedTab = 'active';
 
     $scope.openTrade = function(symbol, quantity) {
         if ( quantity && quantity > 0) {
-            var r = confirm("Buy "+quantity+" units of "+symbol.toUpperCase()+"?");
-            if ( r == true ) {
+            swal({
+                title: '<i class="fa fa-fax fa-2x"></i>',
+                text: "<strong>Buy</strong> "+quantity+" shares of "+symbol.toUpperCase()+"?",
+                showCancelButton: true,
+                confirmButtonColor: "#5CB85C",
+                confirmButtonText: 'Yes, open trade',
+                cancelButtonText: 'No',
+                closeOnConfirm: false,
+                closeOnCancel: true,
+                allowHtml: true
+            }, function(isConfirm){
                 $scope.loadingOpenTrade = true;
                 $http({
                     'method': 'POST',
@@ -22,17 +31,25 @@ app.controller('myController', function( $scope, $sce, $http, $filter, toaster )
                     $scope.loadingOpenTrade = false;
                     toaster.pop('error', 'Error: ' + status, data.message);
                 });
-            } else {
-                return;
-            }
+            });
         } else {
+            toaster.pop('error', 'Error: 406', 'Invalid quantity of shares');
             return;
         }
     };
 
     $scope.closeTrade = function(trade) {
-        var r = confirm("Sell "+trade.shares+" units of "+trade.stock.toUpperCase()+"?");
-        if ( r == true ) {
+        swal({
+            title: '<i class="fa fa-legal fa-2x"></i>',
+            text: "<strong>Sell</strong> "+trade.shares+" units of "+trade.stock.toUpperCase()+"?",
+            showCancelButton: true,
+            confirmButtonColor: "#F0AD4E",
+            confirmButtonText: 'Yes, close trade',
+            cancelButtonText: 'No',
+            closeOnConfirm: false,
+            closeOnCancel: true,
+            allowHtml: true
+        }, function(isConfirm){
             $scope.loadingCloseTrade = true;
             $http({
                 'method': 'PUT',
@@ -47,9 +64,7 @@ app.controller('myController', function( $scope, $sce, $http, $filter, toaster )
                 $scope.loadingCloseTrade = false;
                 toaster.pop('error', 'Error: ' + status, data.message);
             });
-        } else {
-            return;
-        }
+        });
     };
 
     $scope.findStock = function(symbol) {
@@ -114,6 +129,7 @@ app.controller('myController', function( $scope, $sce, $http, $filter, toaster )
                 });
             });
             $scope.chart.options.data[0].dataPoints = chartData;
+            $scope.chart.options.title.text = "Account Balances";
             $scope.chart.options.backgroundColor = "rgb(230, 230, 230)";
             $scope.chart.render();
             $scope.loadingAccountBalances = false;
@@ -182,6 +198,11 @@ app.controller('myController', function( $scope, $sce, $http, $filter, toaster )
         $scope.executeLoad(true);
     };
 
+    $scope.setWindowDimensions = function () {
+        $scope.windowInnerWidth = window.innerWidth;
+        $scope.windowInnerHeight = window.innerHeight;
+    }
+
     $scope.executeLoad = function(hardReset) {
         $scope.getAccountBalances();
         
@@ -208,13 +229,12 @@ app.controller('myController', function( $scope, $sce, $http, $filter, toaster )
             }
         }
 
-        if ( window.innerWidth > 1200 ) {
+        if ( $scope.windowInnerWidth > 1200 ) {
             $scope.getActiveUsers();
         }
     };
 
     // Always initialize
-    $scope.executeLoad();
     CanvasJS.addCultureInfo('default', {
         panText : '<i class="fa fa-arrows"></i> Drag',
         zoomText : '<i class="fa fa-search-plus"></i> Zoom',
@@ -233,7 +253,7 @@ app.controller('myController', function( $scope, $sce, $http, $filter, toaster )
             return content;
         },
         title : {
-            text: "Account Balances"
+            title: ''
         },
         toolTip : {
             content : function(e) {
@@ -257,6 +277,10 @@ app.controller('myController', function( $scope, $sce, $http, $filter, toaster )
             dataPoints: []
         }]
     });
+    $scope.setWindowDimensions();
+    $scope.chart.render();
+    $scope.executeLoad();
+    
 
 }).filter('facebookImage', function() {
     return function(facebookId) {

@@ -13,6 +13,7 @@
         <link rel="shortcut icon" href="/assets/img/<?=ENVIRONMENT?>.ico" type="image/x-icon">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/assets/css/sweet-alert.css">
         <link rel="stylesheet" href="/assets/css/toaster.css">
         <link rel="stylesheet" href="/assets/css/main.css">
     </head>
@@ -25,12 +26,7 @@
             <div class="well well-sm full" id="visualizations">
                 <div class="row full">
                     <div class="col-lg-12 full">
-                        <div class="text-center lead full" ng-if="!accountBalances">
-                            <i class="fa fa-gear fa-spin"></i> LOADING
-                        </div>
-                        <div class="full" id="balanceInformation">
-                            
-                        </div>
+                        <div class="full" id="balanceInformation"></div>
                     </div>
                 </div>
             </div>
@@ -38,38 +34,8 @@
                 <div class="col-lg-10 full">
                     <div class="well well-sm full">
                         <div class="row full">
-                            <div class="col-lg-2 full" id="tabs">
-                                <ul class="nav nav-pills nav-stacked visible-lg" role="tablist">
-                                    <li ng-class="{'active':selectedTab=='active'}" ng-click="switchTab('active')">
-                                        <a href="">
-                                             <i class="fa fa-certificate"></i>
-                                             Active
-                                         </a>
-                                    </li>
-                                    <li ng-class="{'active':selectedTab=='history'}" ng-click="switchTab('history')">
-                                        <a href="">
-                                            <i class="fa fa-archive"></i>
-                                            History
-                                        </a>
-                                    </li>
-                                    <li ng-class="{'active':selectedTab=='open'}" ng-click="switchTab('open')">
-                                        <a href="">
-                                            <i class="fa fa-fax"></i>
-                                            Open
-                                        </a>
-                                    </li>
-                                    <li ng-click="executeLoad()" ng-class="{'disabled':loadingOpenTrade||loadingCloseTrade||loadingFindStock||loadingAccountInformation||loadingAccountBalances||loadingTradeHistory}">
-                                        <a href="">
-                                            <span  ng-if="!(loadingOpenTrade||loadingCloseTrade||loadingFindStock||loadingAccountInformation||loadingAccountBalances||loadingTradeHistory)">
-                                                <i class="fa fa-refresh"></i> Refresh
-                                            </span>
-                                            <span  ng-if="loadingOpenTrade||loadingCloseTrade||loadingFindStock||loadingAccountInformation||loadingAccountBalances||loadingTradeHistory">
-                                                <i class="fa fa-gear fa-spin"></i> Loading
-                                            </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <ul class="nav nav-pills nav-justified hidden-lg" role="tablist">
+                            <div class="col-lg-2 full" id="tabs" ng-resize="setWindowDimensions()">
+                                <ul class="nav nav-pills" ng-class="{'nav-stacked':windowInnerWidth>=1200,'nav-justified':windowInnerWidth<1200}" role="tablist">
                                     <li ng-class="{'active':selectedTab=='active'}" ng-click="switchTab('active')">
                                         <a href="">
                                              <i class="fa fa-certificate"></i>
@@ -159,7 +125,7 @@
                                         <i class="fa fa-frown-o"></i>
                                         <br>
                                         <a class="lead" href="" ng-click="switchTab('open')">
-                                            Open a trade
+                                            open a trade
                                         </a> 
                                     </div>
                                     <div class="text-center lead" ng-if="!accountInformation.active_trades">
@@ -312,6 +278,8 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-animate.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular-sanitize.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/canvasjs/1.4.1/canvas.min.js"></script>
+        <script src="/assets/js/vendor/ngresize.min.js"></script>
+        <script src="/assets/js/vendor/sweet-alert.js"></script>
         <script src="/assets/js/vendor/toaster.js"></script>
         <script src="/assets/js/main.js"></script>
 
