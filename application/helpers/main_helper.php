@@ -56,6 +56,22 @@ if ( ! function_exists('encode_to_chinese') ) {
     }
 }
 
+if ( ! function_exists('seconds_to_time') ) {
+    function seconds_to_time($seconds) {
+        $dtF = new DateTime("@0");
+        $dtT = new DateTime("@$seconds");
+        if ( $seconds < 60 ) {
+            return $dtF->diff($dtT)->format('%s seconds');
+        } else if ( $seconds < 60 * 60 ) {
+            return $dtF->diff($dtT)->format('%i minutes');
+        } else if ( $seconds < 60 * 60 * 24 ) {
+            return $dtF->diff($dtT)->format('%h hours');        
+        } else {
+            return $dtF->diff($dtT)->format('%a days %h hours');    
+        }
+    }
+}
+
 if ( ! function_exists('encode_uri_component') ) {
     function encode_uri_component($str) {
         $revert = array('%21'=>'!', '%2A'=>'*', '%27'=>"'", '%28'=>'(', '%29'=>')');

@@ -7,7 +7,7 @@ app.controller('myController', function( $scope, $sce, $http, $filter, toaster )
         if ( quantity && quantity > 0) {
             swal({
                 title: '<i class="fa fa-fax fa-2x"></i>',
-                text: "<strong>Buy</strong> "+quantity+" shares of "+symbol.toUpperCase()+"?",
+                text: "<em>Trades are locked in for 3 days after opening</em><br><strong>Buy</strong> "+quantity+" shares of "+symbol.toUpperCase()+"?",
                 showCancelButton: true,
                 confirmButtonColor: "#5CB85C",
                 confirmButtonText: 'Yes, open trade',

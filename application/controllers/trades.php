@@ -76,15 +76,25 @@ class Trades extends API_Controller {
             $trade = $this->trade->retrieve_by_id($trade_id);
             if ( $trade ) {
                 if ( ! $trade->closed_user ) {
-                    $trade = $this->trade->close($trade);
-                    if ( $trade ) {
-                        http_response_code("202");
-                        header('Content-Type: application/json');
-                        echo json_encode($trade);   
+                    if ( time() - $trade->opened_datetime > TRADE_LOCKDOWN ) {
+                        $trade = $this->trade->close($trade);
+                        if ( $trade ) {
+                            http_response_code("202");
+                            header('Content-Type: application/json');
+                            echo json_encode($trade);   
+                        } else {
+                            http_response_code("417");
+                            header('Content-Type: application/json');
+                            echo $this->message("Unexpected error occurred: ku8yg");
+                        }
                     } else {
-                        http_response_code("417");
+                        http_response_code("424");
                         header('Content-Type: application/json');
-                        echo $this->message("Unexpected error occurred: ku8yg");
+                        echo $this->message(
+                            "Trade is locked in for " . seconds_to_time( 
+                                (TRADE_LOCKDOWN+$trade->opened_datetime) - time()
+                            ) 
+                        );
                     }
                 } else {    
                     http_response_code("410");

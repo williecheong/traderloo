@@ -13,7 +13,10 @@ define('FB_APPID',          '347239935437437');
 define('FB_SECRET',         'd038b5f41d8dd2d101e4aee676e396cf');
 
 // User active if last action was X seconds ago
-define('ACTIVE_THRESHOLD',  60); 
+define('ACTIVE_THRESHOLD',  60);
+
+// Trades cannot be closed until X seconds after opening
+define('TRADE_LOCKDOWN',    259200);
 
 
 /*
