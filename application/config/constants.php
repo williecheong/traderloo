@@ -16,7 +16,7 @@ define('FB_SECRET',         'd038b5f41d8dd2d101e4aee676e396cf');
 define('ACTIVE_THRESHOLD',  60);
 
 // Trades cannot be closed until X seconds after opening
-define('TRADE_LOCKDOWN',    259200);
+define('TRADE_LOCKDOWN',    21600);
 
 
 /*
