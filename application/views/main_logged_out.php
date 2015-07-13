@@ -31,7 +31,7 @@
                             Many traders
                             <br>
                             <small>
-                                "Don't fuck this up" - <a href="//williecheong.com" target="_blank">w.cheong</a>
+                                "Don't screw this up" - <a href="//williecheong.com" target="_blank">w.cheong</a>
                             </small>
                         </p>
                         <a class="btn btn-default btn-lg btn-wide" href="<?= $this->facebook_url; ?>">
