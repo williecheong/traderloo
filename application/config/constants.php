@@ -8,7 +8,7 @@
 */
 
 define('APP_NAME',          'umngo');
-define('APP_DESCRIPTION',   "One account. Many traders. Don't fuck this up.");
+define('APP_DESCRIPTION',   "One account. Many traders. Don't screw this up.");
 define('FB_APPID',          '347239935437437');
 define('FB_SECRET',         'd038b5f41d8dd2d101e4aee676e396cf');
 
